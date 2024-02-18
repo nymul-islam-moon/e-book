@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BookCategoryController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ChildCategoryController;
@@ -12,24 +13,25 @@ use App\Http\Controllers\Auth\LoginController;
 Route::get('/admin-login', [LoginController::class, 'adminLogin'])->name('admin.login');
 
 Route::middleware(['is_admin'])->prefix('admin')->group(function () {
+
     Route::get('/home', [AdminController::class, 'admin'])->name('admin.home');
     Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-    Route::controller(CategoryController::class)->prefix('product/category')->group(function () {
-        Route::get('/', 'index')->name('product.category.index');
-        Route::get('/create', 'create')->name('product.category.create');
-        Route::post('/store', 'store')->name('product.category.store');
-        Route::get('/{productCategory}/edit', 'edit')->name('product.category.edit');
-        Route::put('/{productCategory}/update', 'update')->name('product.category.update');
-        Route::post('/{productCategory}/active', 'active')->name('product.category.active');
-        Route::post('/{productCategory}/de-active', 'deactive')->name('product.category.deactive');
-        Route::delete('/{productCategory}/destroy', 'destroy')->name('product.category.destroy');
-        Route::post('/{productCategory}/restore', 'restore')->name('product.category.restore');
-        Route::delete('/{productCategory}/force-delete', 'forceDelete')->name('product.category.forcedelete');
-        Route::delete('/destroy-all', 'destroyAll')->name('product.category.destroyAll');
-        Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('product.category.permanentDestroyAll');
-        Route::delete('/restore-all', 'restoreAll')->name('product.category.restoreAll');
-        Route::get('/get-data', 'getAllData')->name('product.category.getAllData');
+    Route::controller(BookCategoryController::class)->prefix('book/category')->group(function () {
+        Route::get('/', 'index')->name('book.category.index');
+        Route::get('/create', 'create')->name('book.category.create');
+        Route::post('/store', 'store')->name('book.category.store');
+        Route::get('/{bookCategory}/edit', 'edit')->name('book.category.edit');
+        Route::put('/{bookCategory}/update', 'update')->name('book.category.update');
+        Route::post('/{bookCategory}/active', 'active')->name('book.category.active');
+        Route::post('/{bookCategory}/de-active', 'deactive')->name('book.category.deactive');
+        Route::delete('/{bookCategory}/destroy', 'destroy')->name('book.category.destroy');
+        Route::post('/{bookCategory}/restore', 'restore')->name('book.category.restore');
+        Route::delete('/{bookCategory}/force-delete', 'forceDelete')->name('book.category.forcedelete');
+        Route::delete('/destroy-all', 'destroyAll')->name('book.category.destroyAll');
+        Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('book.category.permanentDestroyAll');
+        Route::delete('/restore-all', 'restoreAll')->name('book.category.restoreAll');
+        Route::get('/get-data', 'getAllData')->name('book.category.getAllData');
     });
 
     Route::controller(SubCategoryController::class)->prefix('product/sub-category')->group(function () {

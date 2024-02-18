@@ -18,12 +18,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Tasks List</h4>
+                        <h4 class="mb-sm-0">Book Cateory List</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Tasks</a></li>
-                                <li class="breadcrumb-item active">Tasks List</li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Book Cateory</a></li>
+                                <li class="breadcrumb-item active">Book Cateory List</li>
                             </ol>
                         </div>
 
@@ -32,131 +32,22 @@
             </div>
 
             <div class="row">
-                <div class="col-xl-3 col-md-6">
-                    <div class="card card-animate">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1">
-                                    <p class="text-uppercase fw-medium text-muted mb-0">Total Product Categories</p>
-                                </div>
-                                {{-- <div class="flex-shrink-0">
-                                    <h5 class="text-success fs-14 mb-0">
-                                        <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +16.24 %
-                                    </h5>
-                                </div> --}}
-                            </div>
-                            <div class="d-flex align-items-end justify-content-between mt-4">
-                                <div>
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" id="total_category_count" data-target="0">0</span></h4>
-                                    <a href="#" class="text-decoration-underline">View net earnings</a>
-                                </div>
-                                <div class="avatar-sm flex-shrink-0">
-                                    <span class="avatar-title bg-soft-success rounded fs-3">
-                                        <i class="bx bx-dollar-circle text-success"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <div class="card card-animate">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1">
-                                    <p class="text-uppercase fw-medium text-muted mb-0">Total Active Category</p>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-end justify-content-between mt-4">
-                                <div>
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" id="active_category_count" data-target="0">0</span>k</h4>
-                                    <a href="#" class="text-decoration-underline">View net earnings</a>
-                                </div>
-                                <div class="avatar-sm flex-shrink-0">
-                                    <span class="avatar-title bg-soft-success rounded fs-3">
-                                        <i class="bx bx-dollar-circle text-success"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row">
                 <div class="col-xl-12">
                     <div class="card">
 
-                        {{-- <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Service Tables</h4>
-                            <button type="button" class="btn btn-primary bg-gradient waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#myModal">Add Service</button>
-                            <div class="flex-shrink-0">
-                                <div class="form-check form-switch form-switch-right form-switch-md">
-
-                                </div>
-                            </div>
-                        </div> --}}
-
-
                         <div class="card-header border-0">
                             <div class="d-flex align-items-center">
-                                <h5 class="card-title mb-0 flex-grow-1">All Tasks</h5>
+                                <h5 class="card-title mb-0 flex-grow-1">All Book Categories</h5>
                                 <div class="flex-shrink-0">
                                    <div class="d-flex flex-wrap gap-2">
 
                                         {{-- <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#addCategoryModal"><i class="ri-add-line align-bottom me-1"></i> Create Task</button> --}}
-                                        <button class="btn btn-danger add-btn" href="{{ route('product.category.create') }}" id="add_btn"><i class="ri-add-line align-bottom me-1"></i> Create Task</button>
+                                        <button class="btn btn-danger add-btn" href="{{ route('book.category.create') }}" id="add_btn"><i class="ri-add-line align-bottom me-1"></i> Create Task</button>
 
                                         <button class="btn btn-soft-danger" id="temp_delete_all"><i class="ri-delete-bin-2-line"></i></button>
                                         <button class="btn btn-soft-danger d-none" id="permanent_delete_all"><i class="ri-delete-bin-2-line"></i></button>
                                         <button class="btn btn-soft-danger d-none" id="restore_all_selected"><i class="ri-refresh-line"></i></button>
                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-body border border-dashed border-end-0 border-start-0">
-
-                            <div class="row g-3">
-
-                                <div class="col-xxl-2 col-sm-4">
-                                    <div class="input-light">
-                                        <select class="form-control submitable" name="f_soft_delete" id="f_soft_delete">
-                                            <option selected value="1">All</option>
-                                            <option value="2">Trash Categories</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-xxl-2 col-sm-12">
-                                    <div class="search-box">
-                                        <input type="text" class="form-control search bg-light border-light" placeholder="Search for tasks or something...">
-                                        <i class="ri-search-line search-icon"></i>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-xxl-2 col-sm-4">
-                                    <input type="text" class="form-control bg-light border-light" id="demo-datepicker" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" placeholder="Select date range">
-                                </div>
-
-
-                                <div class="col-xxl-2 col-sm-4">
-                                    <div class="input-light">
-                                        <select class="form-control submitable" name="f_status" id="f_status">
-                                            <option value="" Selected>All</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">De-Active</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-xxl-1 col-sm-4">
-                                    <button type="button" class="btn btn-primary w-100"> <i class="ri-equalizer-fill me-1 align-bottom"></i>
-                                        Filters
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -175,12 +66,7 @@
                                                 </th>
                                                 <th scope="col">ID</th>
                                                 <th scope="col">Action</th>
-                                                <th scope="col">Prefix</th>
                                                 <th scope="col">Category Name</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Category Slug</th>
-                                                <th scope="col">Created By</th>
-                                                <th scope="col">Updated By</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -244,7 +130,7 @@
          function getAllData()
         {
             $.ajax({
-                url: "{{ route('product.category.getAllData') }}",
+                url: "{{ route('book.category.getAllData') }}",
                 type: 'GET',
 
                 success: function(data) {
@@ -274,7 +160,7 @@
                 [5, 10, 25, 50, 100, 500, 1000, "All"],
             ],
             ajax: {
-                url: "{{ route('product.category.index') }}",
+                url: "{{ route('book.category.index') }}",
                 data: function(e) {
                     // e.center_id = $('#center_id').val();
                     e.f_status = $('#f_status').val();
@@ -285,19 +171,13 @@
                 {data: 'checkbox', name: 'checkbox'},
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'action', name: 'action'},
-                {data: 'prefix', name: 'prefix'},
                 {data: 'name', name: 'name'},
-                {data: 'status', name: 'status'},
-                {data: 'slug', name: 'slug'},
-                {data: 'created_by', name: 'created_by'},
-                {data: 'updated_by', name: 'updated_by'},
-
             ]
         });
 
 
         /**
-         * Open Product Category Crete Form
+         * Open Book Category Crete Form
          * @author Nymul Islam Moon < towkir1997@gmail.com >
          * */
          /**
@@ -578,7 +458,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('product.category.destroyAll') }}",
+                        url: "{{ route('book.category.destroyAll') }}",
                         type: 'DELETE',
                         data: {
                             ids:all_ids,
@@ -622,7 +502,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('product.category.restoreAll') }}",
+                        url: "{{ route('book.category.restoreAll') }}",
                         type: 'DELETE',
                         data: {
                             ids:all_ids,
@@ -666,7 +546,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('product.category.permanentDestroyAll') }}",
+                        url: "{{ route('book.category.permanentDestroyAll') }}",
                         type: 'DELETE',
                         data: {
                             ids:all_ids,

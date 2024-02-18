@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProductCategoryRequest extends FormRequest
+class StoreBookCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class UpdateProductCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:3|max:100|unique:product_categories,name,' . $this->productCategory->id,
-            'status' => 'required|integer',
+            'name' => 'required|string|min:3|max:100|unique:book_categories,name',
         ];
     }
 
@@ -43,4 +42,5 @@ class UpdateProductCategoryRequest extends FormRequest
             'status.integer' => 'Select a valid status',
         ];
     }
+
 }

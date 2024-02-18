@@ -9,12 +9,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\StoreProductCategoryRequest;
-use App\Http\Requests\UpdateProductCategoryRequest;
-use App\Interface\ProductCategoryInterface;
-use App\Interface\CodeGenerateInterface;
+use App\Http\Requests\StoreBookCategoryRequest;
+use App\Http\Requests\UpdateBookCategoryRequest;
+use App\Models\BookCategory;
 
-class CategoryController extends Controller
+class BookCategoryController extends Controller
 {
 
     /**
@@ -22,12 +21,9 @@ class CategoryController extends Controller
     *
     * @return void
     */
-   public function __construct(ProductCategoryInterface $productCategoryService, CodeGenerateInterface $codeGenerateService)
+   public function __construct()
    {
         $this->middleware('auth');
-
-        $this->productCategoryService = $productCategoryService;
-        $this->codeGenerateService = $codeGenerateService;
    }
 
    /**
@@ -37,7 +33,7 @@ class CategoryController extends Controller
     */
    public function index(Request $request)
    {
-        $query = DB::table('product_categories');
+        $query = DB::table('book_categories');
 
         if (!empty($request->f_soft_delete)) {
             if ($request->f_soft_delete == 1) {
@@ -47,15 +43,11 @@ class CategoryController extends Controller
             }
         }
 
-        if (!empty($request->f_status)) {
-            if ($request->f_status == 1){
-                $query->where('status', 1);
-            }else{
-                $query->where('status', 0);
-            }
-        }
 
         $categories = $query->orderByDesc('id')->get();
+
+
+        // dd( $categories );
 
         if ($request->ajax()) {
             return DataTables::of($categories)
@@ -71,11 +63,11 @@ class CategoryController extends Controller
                     $html .='</button>';
                     $html .='<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">';
                     if ($row->deleted_at == null) {
-                        $html .='<li><a class="dropdown-item" href="'. route('product.category.edit', $row->id) .'" id="edit_btn">Edit</a></li>';
-                        $html .='<li><a class="dropdown-item" href="'. route('product.category.destroy', $row->id) .'" id="delete_btn">Delete</a></li>';
+                        $html .='<li><a class="dropdown-item" href="'. route('book.category.edit', $row->id) .'" id="edit_btn">Edit</a></li>';
+                        $html .='<li><a class="dropdown-item" href="'. route('book.category.destroy', $row->id) .'" id="delete_btn">Delete</a></li>';
                     } else {
-                        $html .='<li><a class="dropdown-item" href="'. route('product.category.restore', $row->id) .'" id="restore_btn">Restore</a></li>';
-                        $html .='<li><a class="dropdown-item" href="'. route('product.category.forcedelete', $row->id) .'" id="force_delete_btn">Hard Delete</a></li>';
+                        $html .='<li><a class="dropdown-item" href="'. route('book.category.restore', $row->id) .'" id="restore_btn">Restore</a></li>';
+                        $html .='<li><a class="dropdown-item" href="'. route('book.category.forcedelete', $row->id) .'" id="force_delete_btn">Hard Delete</a></li>';
                     }
                     $html .='</ul>';
                     $html .='</div>';
@@ -91,47 +83,8 @@ class CategoryController extends Controller
                     return $html;
 
                 })
-                ->addColumn('created_by', function ($row) {
 
-                    if (!empty($row->created_by_id))
-                    {
-                        $user = User::where('id', $row->created_by_id)->first();
-
-                        return $user->first_name . ' ' . $user->last_name;
-                    }else{
-                        return 'N/A';
-                    }
-                })
-                ->addColumn('updated_by', function ($row) {
-
-
-                    if (!empty($row->updated_by_id))
-                    {
-                        $user = User::where('id', $row->updated_by_id)->first();
-                        return $user->first_name . ' ' . $user->last_name;
-                    }else{
-                        return 'N/A';
-                    }
-
-                })
-                ->editColumn('status', function ($row) {
-                    $html = '';
-                    if ($row->status == 1) {
-
-                        $html .='<div class="form-check form-switch">';
-                        $html .='<input class="form-check-input" href="'. route('product.category.deactive', $row->id) .'" type="checkbox" role="switch" id="deactive_btn" checked="">&nbsp;';
-                        $html .='<label class="form-check-label" for="SwitchCheck4"> Active</label>';
-                        $html .='</div>';
-
-                    } else {
-                        $html .='<div class="form-check form-switch">';
-                        $html .='<input class="form-check-input" type="checkbox" href="'. route('product.category.active', $row->id) .'" role="switch" id="active_btn">&nbsp;';
-                        $html .='<label class="form-check-label" for="SwitchCheck4"> De-active</label>';
-                        $html .='</div>';
-                    }
-                    return $html;
-                })
-                ->rawColumns(['action', 'status', 'checkbox'])
+                ->rawColumns(['action', 'checkbox'])
                 ->make(true);
         }
 
@@ -155,38 +108,13 @@ class CategoryController extends Controller
     * @param  \App\Http\Requests\StoreProductCategoryRequest $request
     * @return \Illuminate\Http\Response
     */
-   public function store(StoreProductCategoryRequest $request)
+   public function store(StoreBookCategoryRequest $request)
    {
         $formData = $request->validated();
+        // dd( $formData );
+        $model = new BookCategory();
 
-        $productCaategoryObj = new ProductCategory();
-
-        $tableName = $productCaategoryObj->getTable();
-
-        $formData['created_by_id'] = \auth::user()->id;
-
-        $formData['prefix'] = isset($request->code) ? $request->code : $this->codeGenerateService->productCategoryCode($tableName);
-
-        $formData['code'] = uniqid();
-
-        $formData['created_by'] = auth()->user()->id;
-
-        $formData['slug'] = Str::slug($formData['name'], '-');
-
-        if ($formData['status'] == 1) {
-            $formData['status'] = true;
-        }else {
-            $formData['status'] = false;
-        }
-
-
-        $productCategory = ProductCategory::create($formData);
-
-        // try {
-        //     $categories  = $this->productCategoryService->store($formData);
-        // } catch (\Exception $e) {
-        //     return response()->json('Error');
-        // }
+        $model->create( $formData );
 
         return response()->json('Product Category Created Successfully');
 
