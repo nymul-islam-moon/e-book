@@ -13,7 +13,7 @@ use App\Models\BookCategory;
 class BooksCategoryController extends Controller
 {
 
-    protected $title;
+    protected $title, $createUrl, $storeUrl, $editUrl ,$updateUrl, $activeUrl, $deactivateUrl, $softDeleteUrl, $forceDeleteUrl, $softDeleteAllUrl, $forceDeleteAllUrl, $restoreUrl, $restoreAllUrl;
 
     /**
     * Create a new controller instance.
@@ -25,9 +25,12 @@ class BooksCategoryController extends Controller
         $this->middleware('auth');
 
 
-        $this->title = 'Books Category';
-
-
+        $this->title            = 'Books Category';
+        $this->storeUrl         = 'book.category.store';
+        $this->updateUrl        = '';
+        $this->editUrl          = 'book.category.edit';
+        $this->softDeleteUrl    = 'book.category.destroy';
+        $this->restoreUrl       = 'book.category.restore';
    }
 
    /**
@@ -73,10 +76,10 @@ class BooksCategoryController extends Controller
                     $html .='</button>';
                     $html .='<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">';
                     if ($row->deleted_at == null) {
-                        $html .='<li><a class="dropdown-item" href="'. route('book.category.edit', $row->id) .'" id="edit_btn">Edit</a></li>';
-                        $html .='<li><a class="dropdown-item" href="'. route('book.category.destroy', $row->id) .'" id="delete_btn">Delete</a></li>';
+                        $html .='<li><a class="dropdown-item" href="'. route( $this->editUrl, $row->id ) .'" id="edit_btn">Edit</a></li>';
+                        $html .='<li><a class="dropdown-item" href="'. route( $this->softDeleteUrl, $row->id ) .'" id="delete_btn">Delete</a></li>';
                     } else {
-                        $html .='<li><a class="dropdown-item" href="'. route('book.category.restore', $row->id) .'" id="restore_btn">Restore</a></li>';
+                        $html .='<li><a class="dropdown-item" href="'. route( $this->restoreUrl , $row->id ) .'" id="restore_btn">Restore</a></li>';
                         $html .='<li><a class="dropdown-item" href="'. route('book.category.forcedelete', $row->id) .'" id="force_delete_btn">Hard Delete</a></li>';
                     }
                     $html .='</ul>';
@@ -126,7 +129,8 @@ class BooksCategoryController extends Controller
    public function create()
    {
         $title = $this->title;
-        return view('admin.category.create', compact( 'title' ));
+        $url = $this->storeUrl;
+        return view('admin.category.create', compact( 'title', 'url' ));
    }
 
    /**

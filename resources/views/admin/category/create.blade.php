@@ -3,7 +3,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Add {{ $title }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
     </div>
-    <form class="tablelist-form" autocomplete="off" id="add_category_form" action="{{ route('book.category.store') }}" method="POST">
+    <form class="tablelist-form" autocomplete="off" id="add_category_form" action="{{ route($url) }}" method="POST">
         @csrf
         @method('POST')
         <div class="modal-body">
