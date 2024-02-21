@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
@@ -12,7 +10,7 @@ use App\Http\Requests\StoreBookCategoryRequest;
 use App\Http\Requests\UpdateBookCategoryRequest;
 use App\Models\BookCategory;
 
-class BookCategoryController extends Controller
+class BooksCategoryController extends Controller
 {
 
     protected $title;

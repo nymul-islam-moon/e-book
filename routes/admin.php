@@ -2,13 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\BookCategoryController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\Admin\ChildCategoryController;
+use App\Http\Controllers\Admin\BooksCategoryController;
+use App\Http\Controllers\Admin\BooksController;
 use App\Http\Controllers\Auth\LoginController;
-
-
 
 Route::get('/admin-login', [LoginController::class, 'adminLogin'])->name('admin.login');
 
@@ -17,7 +13,7 @@ Route::middleware(['is_admin'])->prefix('admin')->group(function () {
     Route::get('/home', [AdminController::class, 'admin'])->name('admin.home');
     Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-    Route::controller(BookCategoryController::class)->prefix('book/category')->group(function () {
+    Route::controller(BooksCategoryController::class)->prefix('books/category')->group(function () {
         Route::get('/', 'index')->name('book.category.index');
         Route::get('/create', 'create')->name('book.category.create');
         Route::post('/store', 'store')->name('book.category.store');
@@ -34,21 +30,21 @@ Route::middleware(['is_admin'])->prefix('admin')->group(function () {
         Route::get('/get-data', 'getAllData')->name('book.category.getAllData');
     });
 
-    Route::controller(SubCategoryController::class)->prefix('product/sub-category')->group(function () {
-        Route::get('/', 'index')->name('product.subCategory.index');
-        Route::get('/create', 'create')->name('product.subCategory.create');
-        Route::post('/store', 'store')->name('product.subCategory.store');
-        Route::get('/{subCategory}/edit', 'edit')->name('product.subCategory.edit');
-        Route::put('/{subCategory}/update', 'update')->name('product.subCategory.update');
-        Route::post('/{subCategory}/active', 'active')->name('product.subCategory.active');
-        Route::post('/{subCategory}/de-active', 'deactive')->name('product.subCategory.deactive');
-        Route::delete('/{subCategory}/destroy', 'destroy')->name('product.subCategory.destroy');
-        Route::post('/{subCategory}/restore', 'restore')->name('product.subCategory.restore');
-        Route::delete('/{subCategory}/force-delete', 'forceDelete')->name('product.subCategory.forcedelete');
-        Route::delete('/destroy-all', 'destroyAll')->name('product.subCategory.destroyAll');
-        Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('product.subCategory.permanentDestroyAll');
-        Route::delete('/restore-all', 'restoreAll')->name('product.subCategory.restoreAll');
-        Route::get('/get-data', 'getAllData')->name('product.subCategory.getAllData');
+    Route::controller(BooksController::class)->prefix('books')->group(function () {
+        Route::get('/', 'index')->name('admin.books.index');
+        Route::get('/create', 'create')->name('admin.books.create');
+        Route::post('/store', 'store')->name('admin.books.store');
+        Route::get('/{books}/edit', 'edit')->name('admin.books.edit');
+        Route::put('/{books}/update', 'update')->name('admin.books.update');
+        Route::post('/{books}/active', 'active')->name('admin.books.active');
+        Route::post('/{books}/de-active', 'deactive')->name('admin.books.deactive');
+        Route::delete('/{books}/destroy', 'destroy')->name('admin.books.destroy');
+        Route::post('/{books}/restore', 'restore')->name('admin.books.restore');
+        Route::delete('/{books}/force-delete', 'forceDelete')->name('admin.books.forcedelete');
+        Route::delete('/destroy-all', 'destroyAll')->name('admin.books.destroyAll');
+        Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('admin.books.permanentDestroyAll');
+        Route::delete('/restore-all', 'restoreAll')->name('admin.books.restoreAll');
+        Route::get('/get-data', 'getAllData')->name('admin.books.getAllData');
     });
 
     Route::get('/test', function () {
