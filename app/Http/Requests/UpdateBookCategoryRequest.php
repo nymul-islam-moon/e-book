@@ -24,7 +24,7 @@ class UpdateBookCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:3|max:100|unique:product_categories,name,' . $this->productCategory->id,
+            'name' => 'required|string|min:3|max:100|unique:book_categories,name,' . $this->bookCategory->id,
             'status' => 'required|integer',
         ];
     }
@@ -38,8 +38,8 @@ class UpdateBookCategoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Product Category Name must be Required',
-            'name.unique' => 'Product Category Name Already Exists',
+            'name.required' => 'Books category name must be required',
+            'name.unique' => 'Books category name already exists',
             'status.integer' => 'Select a valid status',
         ];
     }

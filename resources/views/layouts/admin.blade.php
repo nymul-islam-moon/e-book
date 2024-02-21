@@ -4,7 +4,8 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>{{ config('app.name', 'Lara-Commerce') }}</title>
+    {{-- <title>{{ config('app.name', 'Lara-Commerce') }}</title> --}}
+    <title>E-Book - @yield('title')</title>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -29,10 +30,7 @@
     <link href="{{ asset('dashboard/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
 
 
-    {{--
-        Author : Nymul Islam Moon <towkir1997islam@gmail.com>
-        Toaster CSS
-    --}}
+    {{-- Author : Nymul Islam Moon <towkir1997islam@gmail.com> Toaster CSS --}}
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     @stack('script')

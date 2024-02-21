@@ -1,18 +1,18 @@
 <div class="modal-content border-0">
     <div class="modal-header p-3 bg-soft-info">
-        <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit {{ $title }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
     </div>
 
-    <form class="tablelist-form" id="edit_category_form" action="{{ route('product.category.update', $productCategory->id) }}" method="POST">
+    <form class="tablelist-form" id="edit_category_form" action="{{ route('book.category.update', $bookCategory->id) }}" method="POST">
         @csrf
         @method('put')
         <div class="modal-body">
             <div class="row g-3">
 
                 <div class="col-lg-6">
-                    <label for="category_name" class="form-label">Category Name</label>
-                    <input type="text" id="category_name" name="name" class="form-control" value="{{ $productCategory->name }}" placeholder="Category name">
+                    <label for="category_name" class="form-label">{{ $title }} Name</label>
+                    <input type="text" id="category_name" name="name" class="form-control" value="{{ $bookCategory->name }}" placeholder="{{ $title }} name">
                     <span class="error error_e_name text-danger"></span>
                 </div>
 
@@ -20,8 +20,8 @@
                     <label for="category_status" class="form-label">Status</label>
                     <select class="form-control" name="status" id="category_status">
                         <option selected>Status</option>
-                        <option value="1" {{ $productCategory->status == 1 ? 'selected' : '' }}>Active</option>
-                        <option value="0" {{ $productCategory->status == 0 ? 'selected' : '' }}>De-Active</option>
+                        <option value="1" {{ $bookCategory->status == 1 ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ $bookCategory->status == 0 ? 'selected' : '' }}>De-Active</option>
                     </select>
                     <span class="error error_e_status text-danger"></span>
                 </div>
@@ -33,7 +33,7 @@
         <div class="modal-footer" style="display: block;">
             <div class="hstack gap-2 justify-content-end">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary update_button">Update Agent</button>
+                <button type="submit" class="btn btn-primary update_button">Update {{ $title }}</button>
             </div>
         </div>
     </form>

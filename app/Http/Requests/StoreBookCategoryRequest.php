@@ -24,7 +24,8 @@ class StoreBookCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:3|max:100|unique:book_categories,name',
+            'name'      => 'required|string|min:3|max:100|unique:book_categories,name',
+            'status'    => 'required|integer',
         ];
     }
 
@@ -37,9 +38,9 @@ class StoreBookCategoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Product Category Name must be Required',
-            'name.unique' => 'Product Category Name Already Exists',
-            'status.integer' => 'Select a valid status',
+            'name.required'     => 'Books category name must be required',
+            'name.unique'       => 'Books category name already exists',
+            'status.integer'    => 'Select a valid status',
         ];
     }
 

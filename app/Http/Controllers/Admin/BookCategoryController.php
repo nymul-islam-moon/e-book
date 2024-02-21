@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\ProductCategory;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +15,8 @@ use App\Models\BookCategory;
 class BookCategoryController extends Controller
 {
 
+    protected $title;
+
     /**
     * Create a new controller instance.
     *
@@ -24,6 +25,11 @@ class BookCategoryController extends Controller
    public function __construct()
    {
         $this->middleware('auth');
+
+
+        $this->title = 'Books Category';
+
+
    }
 
    /**
@@ -43,16 +49,22 @@ class BookCategoryController extends Controller
             }
         }
 
+        if ( !empty( $request->f_status ) ) {
+            if ($request->f_status == 1){
+                $query->where('status', 1);
+            }else{
+                $query->where('status', 0);
+            }
+        }
+
 
         $categories = $query->orderByDesc('id')->get();
 
 
-        // dd( $categories );
-
-        if ($request->ajax()) {
-            return DataTables::of($categories)
+        if ( $request->ajax() ) {
+            return DataTables::of( $categories )
                 ->addIndexColumn()
-                ->addColumn('action', function ($row) {
+                ->addColumn( 'action', function ( $row ) {
 
                     $html = '';
 
@@ -83,13 +95,29 @@ class BookCategoryController extends Controller
                     return $html;
 
                 })
+                ->editColumn('status', function ($row) {
+                    $html = '<div class="form-check form-switch">'.
+                            '<input class="form-check-input" href="'.route('book.category.deactive', $row->id).'" type="checkbox" role="switch" id="deactive_btn" '.($row->status == 1 ? 'checked' : '').'>&nbsp;'.
+                            '<label class="form-check-label" for="SwitchCheck4"> Active</label>'.
+                            '</div>';
 
-                ->rawColumns(['action', 'checkbox'])
+                    if ($row->status != 1) {
+                        $html = '<div class="form-check form-switch">'.
+                                '<input class="form-check-input" type="checkbox" href="'.route('book.category.active', $row->id).'" role="switch" id="active_btn">&nbsp;'.
+                                '<label class="form-check-label" for="SwitchCheck4"> De-active</label>'.
+                                '</div>';
+                    }
+
+                    return $html;
+                })
+
+                ->rawColumns(['action', 'status', 'checkbox'])
                 ->make(true);
         }
 
+        $title = $this->title;
 
-        return view('admin.category.index', compact('categories'));
+        return view('admin.category.index', compact( 'title' ));
    }
 
    /**
@@ -99,34 +127,32 @@ class BookCategoryController extends Controller
     */
    public function create()
    {
-       return view('admin.category.create');
+        $title = $this->title;
+        return view('admin.category.create', compact( 'title' ));
    }
 
    /**
     * Store a newly created resource in storage.
     *
-    * @param  \App\Http\Requests\StoreProductCategoryRequest $request
+    * @param  \App\Http\Requests\StoreBookCategoryRequest $request
     * @return \Illuminate\Http\Response
     */
-   public function store(StoreBookCategoryRequest $request)
+   public function store( StoreBookCategoryRequest $request, BookCategory $bookCategory )
    {
         $formData = $request->validated();
-        // dd( $formData );
-        $model = new BookCategory();
 
-        $model->create( $formData );
+        $bookCategory->create( $formData );
 
-        return response()->json('Product Category Created Successfully');
-
+        return response()->json("$this->title created successfully");
    }
 
    /**
     * Display the specified resource.
     *
-    * @param  \App\Models\ProductCategory $productCategory
+    * @param  \App\Models\BookCategory $bookCategory
     * @return \Illuminate\Http\Response
     */
-   public function show(ProductCategory $productCategory)
+   public function show( BookCategory $bookCategory )
    {
        //
    }
@@ -134,88 +160,84 @@ class BookCategoryController extends Controller
    /**
     * Show the form for editing the specified resource.
     *
-    * @param  \App\Models\ProductCategory  $productCategory
+    * @param  \App\Models\BookCategory  $bookCategory
     * @return \Illuminate\Http\Response
     */
-   public function edit(ProductCategory $productCategory)
+   public function edit( BookCategory $bookCategory )
    {
-        return view('admin.category.edit', compact('productCategory'));
+        $title = $this->title;
+        return view('admin.category.edit', compact('bookCategory', 'title'));
    }
 
    /**
     * Update the specified resource in storage.
     *
-    * @param  \App\Http\Requests\UpdateProductCategoryRequest  $request
-    * @param  \App\Models\ProductCategory $productCategory
+    * @param  \App\Http\Requests\UpdateBookCategoryRequest  $request
+    * @param  \App\Models\BookCategory $bookCategory
     * @return \Illuminate\Http\Response
     */
-   public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
+   public function update(UpdateBookCategoryRequest $request, BookCategory $bookCategory)
    {
-        try {
-                $formData = $request->validated();
-                $categories  = $this->productCategoryService->update($productCategory, $formData);
-            } catch (\Exception $e) {
-                return response()->json('Error');
-            }
+        $formData = $request->validated();
 
-        return response()->json('Product Category Updated Successfully');
+        $bookCategory->update($formData);
+
+        return response()->json("$this->title Updated Successfully");
     }
 
    /**
     * Remove the specified resource from storage.
     *
-    * @param  \App\Models\ProductCategory $productCategory
+    * @param  \App\Models\BookCategory $bookCategory
     * @return \Illuminate\Http\Response
     */
-   public function destroy(ProductCategory $productCategory)
+   public function destroy(BookCategory $bookCategory)
    {
-        $productCategory->status = 0;
-        $productCategory->save();
-        $productCategory->delete();
+        $bookCategory->delete();
 
-        return response()->json('Product Category Deleted Successfully');
+        return response()->json("$this->title Deleted Successfully");
    }
 
 
    /**
      * Active the specified resource from storage.
      *
-     * @param  \App\Models\ProductCategory  $productCategory
+     * @param  \App\Models\BookCategory  $bookCategory
      * @return \Illuminate\Http\Response
      */
-    public function active(ProductCategory $productCategory)
+    public function active(BookCategory $bookCategory)
     {
-        $productCategory->status = 1;
-        $productCategory->save();
-        return response()->json('Product Category Activated Successfully');
+        $bookCategory->status = 1;
+        $bookCategory->save();
+        return response()->json("$this->title activated successfully");
     }
 
 
     /**
      * De-active the specified resource from storage.
      *
-     * @param  \App\Models\ProductCategory  $productCategory
+     * @param  \App\Models\BookCategory  $bookCategory
      * @return \Illuminate\Http\Response
      */
-    public function deactive(ProductCategory $productCategory)
+    public function deactive(BookCategory $bookCategory)
     {
-        $productCategory->status = 0;
-        $productCategory->save();
-        return response()->json('Product Category De-activated Successfully');
+        $bookCategory->status = 0;
+        $bookCategory->save();
+        return response()->json("$this->title de-activated successfully");
     }
 
     /**
      * Restore the soft deleted data.
      *
-     * @param  \App\Models\ProductCategory $productCategory
+     * @param  \App\Models\BookCategory $bookCategory
      * @return \Illuminate\Http\Response
      */
 
-    public function restore($productCategory)
+    public function restore($bookCategory)
     {
-        ProductCategory::where('id', $productCategory)->withTrashed()->restore();
+        BookCategory::where('id', $bookCategory)->withTrashed()->restore();
 
-        return response()->json('Product Category Restored Successfully');
+        return response()->json("$this->title restored successfully");
     }
 
 
@@ -223,13 +245,13 @@ class BookCategoryController extends Controller
     /**
      * Force Delete the soft deleted data.
     *
-    * @param  \App\Models\ProductCategory $productCategory
+    * @param  \App\Models\BookCategory $bookCategory
     * @return \Illuminate\Http\Response
     */
 
-    public function forceDelete($productCategory)
+    public function forceDelete($bookCategory)
     {
-        ProductCategory::where('id', $productCategory)->withTrashed()->forceDelete();
+        BookCategory::where('id', $bookCategory)->withTrashed()->forceDelete();
 
         return response()->json('Product Category Permanently Deleted Successfully');
     }
@@ -238,7 +260,7 @@ class BookCategoryController extends Controller
     /**
      * Force Delete the soft deleted data.
     *
-    * @param  \App\Models\ProductCategory $productCategory
+    * @param  \App\Models\BookCategory $bookCategory
     * @return \Illuminate\Http\Response
     */
 
@@ -250,10 +272,10 @@ class BookCategoryController extends Controller
         $idArr = (array) $ids;
 
         foreach ($idArr as $key=> $id) {
-            $productCategory = ProductCategory::where('id', $id)->first();
-            $productCategory->status = 0;
-            $productCategory->save();
-            $productCategory->delete();
+            $bookCategory = BookCategory::where('id', $id)->first();
+            $bookCategory->status = 0;
+            $bookCategory->save();
+            $bookCategory->delete();
         }
         return response()->json('Product Category Deleted Successfully');
     }
@@ -262,7 +284,7 @@ class BookCategoryController extends Controller
     /**
      * Restore all the soft deleted data
     *
-    * @param  \App\Models\ProductCategory $productCategory
+    * @param  \App\Models\BookCategory $bookCategory
     * @return \Illuminate\Http\Response
     */
 
@@ -274,10 +296,10 @@ class BookCategoryController extends Controller
         $idArr = (array) $ids;
 
         foreach ($idArr as $key=> $id) {
-            $productCategory = ProductCategory::where('id', $id)->withTrashed()->restore();
+            $bookCategory = BookCategory::where('id', $id)->withTrashed()->restore();
         }
 
-        return response()->json('Product Category Restored Successfully');
+        return response()->json("$this->title restored successfully");
 
     }
 
@@ -285,7 +307,7 @@ class BookCategoryController extends Controller
     /**
      * Permanently Delete all the soft deleted data
     *
-    * @param  \App\Models\ProductCategory $productCategory
+    * @param  \App\Models\BookCategory $bookCategory
     * @return \Illuminate\Http\Response
     */
 
@@ -297,32 +319,10 @@ class BookCategoryController extends Controller
         $idArr = (array) $ids;
 
         foreach ($idArr as $key=> $id) {
-            $productCategory = ProductCategory::where('id', $id)->withTrashed()->forceDelete();
+            $bookCategory = BookCategory::where('id', $id)->withTrashed()->forceDelete();
         }
 
-        return response()->json('Product Category Permanently Deleted Successfully');
+        return response()->json("$this->title permanently deleted successfully");
 
     }
-
-
-    /**
-     * Get all the data
-    *
-    * @param  \App\Models\ProductCategory $productCategory
-    * @return \Illuminate\Http\Response
-    */
-
-    public function getAllData(Request $request)
-    {
-        $allCategory = ProductCategory::count();
-        // $activeCategories = ProductCategory::where('satus', '=', 1)->count();
-        $data = [
-            'allCategory' => $allCategory,
-            'allTrashCategory' => 3,
-            'activeCategories' => 2,
-        ];
-
-        return $data;
-    }
-
 }

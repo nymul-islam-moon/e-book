@@ -14,6 +14,6 @@ class BookCategory extends Model
 
     protected $table = 'book_categories';
 
-    protected $fillable = [ 'name' ];
+    protected $fillable = [ 'name', 'status' ];
 
 }
