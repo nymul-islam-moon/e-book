@@ -34,38 +34,20 @@
                     </a>
                 </li>
 
-                {{-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
-                        <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
+                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">E-Book</span></li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('book.category.index') ? 'active' : '' }}" href="{{ route('book.category.index') }}">
+                        <i class="ri-book-mark-line"></i> <span data-key="t-widgets">Category</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarDashboards">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="dashboard-analytics.html" class="nav-link" data-key="t-analytics"> Analytics </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-crm.html" class="nav-link" data-key="t-crm"> CRM </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="index-2.html" class="nav-link" data-key="t-ecommerce"> Ecommerce </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-crypto.html" class="nav-link" data-key="t-crypto"> Crypto </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-projects.html" class="nav-link" data-key="t-projects"> Projects </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-nft.html" class="nav-link" data-key="t-nft"> NFT</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-job.html" class="nav-link"><span data-key="t-job">Job</span> <span class="badge badge-pill bg-success" data-key="t-new">New</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> --}}
+                </li>
 
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="widgets.html">
+                        <i class="ri-book-fill"></i> <span data-key="t-widgets">Books</span>
+                    </a>
+                </li>
+
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link active" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-apps-2-line"></i> <span data-key="t-apps">E-Book</span>
                     </a>
@@ -78,7 +60,7 @@
 
                         </ul>
                     </div>
-                </li>
+                </li> --}}
             </ul>
         </div>
         <!-- Sidebar -->
