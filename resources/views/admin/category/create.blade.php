@@ -3,7 +3,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Add {{ $title }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
     </div>
-    <form class="tablelist-form" autocomplete="off" id="add_category_form" action="{{ route($url) }}" method="POST">
+    <form class="tablelist-form" autocomplete="off" id="add_form" action="{{ route('book.category.store') }}" method="POST">
         @csrf
         @method('POST')
         <div class="modal-body">
@@ -37,7 +37,7 @@
 
 <script>
 
-    $(document).on('submit', '#add_category_form', function(e) {
+    $(document).off('submit', '#add_form').on('submit', '#add_form', function(e) {
         e.preventDefault();
 
         var url = $(this).attr('action');
@@ -51,7 +51,7 @@
             cache: false,
             processData: false,
             success: function(data) {
-                $('#add_category_form')[0].reset();
+                $('#add_form')[0].reset();
 
                 $('#addCategoryModal').modal('hide');
 
