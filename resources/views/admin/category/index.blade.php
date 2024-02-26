@@ -42,7 +42,7 @@
                                 <div class="flex-shrink-0">
                                    <div class="d-flex flex-wrap gap-2">
 
-                                        {{-- <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#addCategoryModal"><i class="ri-add-line align-bottom me-1"></i> Create Task</button> --}}
+                                        {{-- <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#addModal"><i class="ri-add-line align-bottom me-1"></i> Create Task</button> --}}
                                         <button class="btn btn-danger add-btn" href="{{ route('book.category.create') }}" id="add_btn"><i class="ri-add-line align-bottom me-1"></i> Create {{ $title }}</button>
 
                                         <button class="btn btn-soft-danger" id="temp_delete_all"><i class="ri-delete-bin-2-line"></i></button>
@@ -82,7 +82,7 @@
                         <div class="card-body">
                             <div class="live-preview">
                                 <div class="table-responsive table-card">
-                                    <table class="table align-middle table-nowrap mb-0 data_tbl category_table">
+                                    <table class="table align-middle table-nowrap mb-0 data_tbl __table__">
                                         <thead class="table-light">
                                             <tr>
                                                 <th scope="col" style="width: 46px;">
@@ -109,7 +109,7 @@
                 </div>
             </div>
 
-            <div class="modal fade zoomIn" id="addCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade zoomIn" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-lg" id="add-content">
 
                 </div>
@@ -151,7 +151,7 @@
          * Yajra DataTable for show all data
          *
          * */
-        var books_category_table = $('.category_table').DataTable({
+        var __table__ = $('.__table__').DataTable({
             processing: true,
             serverSide: true,
             searching: true,
@@ -203,7 +203,7 @@
 
                     $('#add-content').empty();
                     $('#add-content').html(data);
-                    $('#addCategoryModal').modal('show');
+                    $('#addModal').modal('show');
                 },
                 error: function(err) {
                     $('.data_preloader').hide();
@@ -286,11 +286,11 @@
                 type: 'delete',
                 success: function(data) {
                     toastr.error(data)
-                    books_category_table.ajax.reload();
+                    __table__.ajax.reload();
                 },
                 error: function(err) {
                     toastr.error(err.responseJSON)
-                    books_category_table.ajax.reload();
+                    __table__.ajax.reload();
                 }
             });
         });
@@ -301,7 +301,7 @@
          * */
 
         $('.submitable').on('change', function(e) {
-            books_category_table.ajax.reload();
+            __table__.ajax.reload();
         });
 
 
@@ -330,11 +330,11 @@
                 type: 'post',
                 success: function(data) {
                     toastr.success(data)
-                    books_category_table.ajax.reload();
+                    __table__.ajax.reload();
                 },
                 error: function(err) {
                     toastr.error(err.responseJSON)
-                    books_category_table.ajax.reload();
+                    __table__.ajax.reload();
                 }
             });
         });
@@ -353,11 +353,11 @@
                 type: 'post',
                 success: function(data) {
                     toastr.error(data)
-                    books_category_table.ajax.reload();
+                    __table__.ajax.reload();
                 },
                 error: function(err) {
                     toastr.error(err.responseJSON)
-                    books_category_table.ajax.reload();
+                    __table__.ajax.reload();
                 }
             });
         });
@@ -387,11 +387,11 @@
                         type: 'post',
                         success: function(data) {
                             toastr.error(data)
-                            books_category_table.ajax.reload();
+                            __table__.ajax.reload();
                         },
                         error: function(err) {
                             toastr.error(err.responseJSON)
-                            books_category_table.ajax.reload();
+                            __table__.ajax.reload();
                         }
                     });
                 }
@@ -474,12 +474,12 @@
 
                         success: function(data) {
                             toastr.error(data);
-                            books_category_table.ajax.reload();
+                            __table__.ajax.reload();
                             $("#select_all_ids").prop("checked", false);
                         },
                         error: function(err) {
                             toastr.error(err.responseJSON)
-                            books_category_table.ajax.reload();
+                            __table__.ajax.reload();
                         }
                     });
                 }
@@ -518,12 +518,12 @@
 
                         success: function(data) {
                             toastr.success(data);
-                            books_category_table.ajax.reload();
+                            __table__.ajax.reload();
                             $("#select_all_ids").prop("checked", false);
                         },
                         error: function(err) {
                             toastr.error(err.responseJSON)
-                            books_category_table.ajax.reload();
+                            __table__.ajax.reload();
                         }
                     });
                 }
@@ -562,12 +562,12 @@
 
                         success: function(data) {
                             toastr.error(data);
-                            books_category_table.ajax.reload();
+                            __table__.ajax.reload();
                             $("#select_all_ids").prop("checked", false);
                         },
                         error: function(err) {
                             toastr.error(err.responseJSON)
-                            books_category_table.ajax.reload();
+                            __table__.ajax.reload();
                         }
                     });
                 }

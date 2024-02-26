@@ -42,8 +42,8 @@
                                 <div class="flex-shrink-0">
                                    <div class="d-flex flex-wrap gap-2">
 
-                                        {{-- <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#addCategoryModal"><i class="ri-add-line align-bottom me-1"></i> Create Task</button> --}}
-                                        <button class="btn btn-danger add-btn" href="{{ route('book.category.create') }}" id="add_btn"><i class="ri-add-line align-bottom me-1"></i> Create {{ $title }}</button>
+                                        {{-- <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#addModal"><i class="ri-add-line align-bottom me-1"></i> Create Task</button> --}}
+                                        <button class="btn btn-danger add-btn" href="{{ route('admin.books.create') }}" id="add_btn"><i class="ri-add-line align-bottom me-1"></i> Create {{ $title }}</button>
 
                                         <button class="btn btn-soft-danger" id="temp_delete_all"><i class="ri-delete-bin-2-line"></i></button>
                                         <button class="btn btn-soft-danger d-none" id="permanent_delete_all"><i class="ri-delete-bin-2-line"></i></button>
@@ -74,7 +74,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
@@ -82,7 +81,7 @@
                         <div class="card-body">
                             <div class="live-preview">
                                 <div class="table-responsive table-card">
-                                    <table class="table align-middle table-nowrap mb-0 data_tbl book_table">
+                                    <table class="table align-middle table-nowrap mb-0 data_tbl __table__">
                                         <thead class="table-light">
                                             <tr>
                                                 <th scope="col" style="width: 46px;">
@@ -94,6 +93,8 @@
                                                 <th scope="col">Action</th>
                                                 <th scope="col">{{ $title }} Name</th>
                                                 <th scope="col">Status</th>
+                                                <th scope="col">File</th>
+                                                <th scope="col">Cover Photo</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -109,13 +110,13 @@
                 </div>
             </div>
 
-            <div class="modal fade zoomIn" id="addCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade zoomIn" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-lg" id="add-content">
 
                 </div>
             </div>
 
-            <div class="modal fade zoomIn" id="editCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade zoomIn" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-lg" id="edit-content">
 
                 </div>
@@ -151,7 +152,7 @@
          * Yajra DataTable for show all data
          *
          * */
-        var books_table = $('.book_table').DataTable({
+        var __table__ = $('.__table__').DataTable({
             processing: true,
             serverSide: true,
             searching: true,
@@ -166,7 +167,7 @@
                 [5, 10, 25, 50, 100, 500, 1000, "All"],
             ],
             ajax: {
-                url: "{{ route('book.category.index') }}",
+                url: "{{ route('admin.books.index') }}",
                 data: function(e) {
                     // e.center_id = $('#center_id').val();
                     e.f_status = $('#f_status').val();
@@ -179,6 +180,8 @@
                 {data: 'action', name: 'action'},
                 {data: 'name', name: 'name'},
                 {data: 'status', name: 'status'},
+                {data: 'file', name: 'file'},
+                {data: 'img', name: 'img'},
             ]
         });
 
@@ -203,7 +206,7 @@
 
                     $('#add-content').empty();
                     $('#add-content').html(data);
-                    $('#addCategoryModal').modal('show');
+                    $('#addModal').modal('show');
                 },
                 error: function(err) {
                     $('.data_preloader').hide();
@@ -233,7 +236,7 @@
 
                     $('#edit-content').empty();
                     $('#edit-content').html(data);
-                    $('#editCategoryModal').modal('show');
+                    $('#editModal').modal('show');
                 },
                 error: function(err) {
                     $('.data_preloader').hide();
@@ -286,11 +289,11 @@
                 type: 'delete',
                 success: function(data) {
                     toastr.error(data)
-                    books_table.ajax.reload();
+                    __table__.ajax.reload();
                 },
                 error: function(err) {
                     toastr.error(err.responseJSON)
-                    books_table.ajax.reload();
+                    __table__.ajax.reload();
                 }
             });
         });
@@ -301,7 +304,7 @@
          * */
 
         $('.submitable').on('change', function(e) {
-            books_table.ajax.reload();
+            __table__.ajax.reload();
         });
 
 
@@ -330,11 +333,11 @@
                 type: 'post',
                 success: function(data) {
                     toastr.success(data)
-                    books_table.ajax.reload();
+                    __table__.ajax.reload();
                 },
                 error: function(err) {
                     toastr.error(err.responseJSON)
-                    books_table.ajax.reload();
+                    __table__.ajax.reload();
                 }
             });
         });
@@ -353,11 +356,11 @@
                 type: 'post',
                 success: function(data) {
                     toastr.error(data)
-                    books_table.ajax.reload();
+                    __table__.ajax.reload();
                 },
                 error: function(err) {
                     toastr.error(err.responseJSON)
-                    books_table.ajax.reload();
+                    __table__.ajax.reload();
                 }
             });
         });
@@ -387,11 +390,11 @@
                         type: 'post',
                         success: function(data) {
                             toastr.error(data)
-                            books_table.ajax.reload();
+                            __table__.ajax.reload();
                         },
                         error: function(err) {
                             toastr.error(err.responseJSON)
-                            books_table.ajax.reload();
+                            __table__.ajax.reload();
                         }
                     });
                 }
@@ -465,7 +468,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('book.category.destroyAll') }}",
+                        url: "{{ route('admin.books.destroyAll') }}",
                         type: 'DELETE',
                         data: {
                             ids:all_ids,
@@ -474,12 +477,12 @@
 
                         success: function(data) {
                             toastr.error(data);
-                            books_table.ajax.reload();
+                            __table__.ajax.reload();
                             $("#select_all_ids").prop("checked", false);
                         },
                         error: function(err) {
                             toastr.error(err.responseJSON)
-                            books_table.ajax.reload();
+                            __table__.ajax.reload();
                         }
                     });
                 }
@@ -509,7 +512,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('book.category.restoreAll') }}",
+                        url: "{{ route('admin.books.restoreAll') }}",
                         type: 'DELETE',
                         data: {
                             ids:all_ids,
@@ -518,12 +521,12 @@
 
                         success: function(data) {
                             toastr.success(data);
-                            books_table.ajax.reload();
+                            __table__.ajax.reload();
                             $("#select_all_ids").prop("checked", false);
                         },
                         error: function(err) {
                             toastr.error(err.responseJSON)
-                            books_table.ajax.reload();
+                            __table__.ajax.reload();
                         }
                     });
                 }
@@ -553,7 +556,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('book.category.permanentDestroyAll') }}",
+                        url: "{{ route('admin.books.permanentDestroyAll') }}",
                         type: 'DELETE',
                         data: {
                             ids:all_ids,
@@ -562,12 +565,12 @@
 
                         success: function(data) {
                             toastr.error(data);
-                            books_table.ajax.reload();
+                            __table__.ajax.reload();
                             $("#select_all_ids").prop("checked", false);
                         },
                         error: function(err) {
                             toastr.error(err.responseJSON)
-                            books_table.ajax.reload();
+                            __table__.ajax.reload();
                         }
                     });
                 }

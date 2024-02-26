@@ -53,11 +53,11 @@
             success: function(data) {
                 $('#add_form')[0].reset();
 
-                $('#addCategoryModal').modal('hide');
+                $('#addModal').modal('hide');
 
                 $('.submit_button').prop('type', 'submit');
 
-                $('.category_table').DataTable().ajax.reload();
+                $('.__table__').DataTable().ajax.reload();
 
                 toastr.success(data)
 

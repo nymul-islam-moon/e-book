@@ -41,11 +41,11 @@
                     </a>
                 </li>
 
-                {{-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets.html">
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('admin.books.index') ? 'active' : '' }}" href="{{ route('admin.books.index') }}">
                         <i class="ri-book-fill"></i> <span data-key="t-widgets">Books</span>
                     </a>
-                </li> --}}
+                </li>
 
                 {{-- <li class="nav-item">
                     <a class="nav-link menu-link active" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">

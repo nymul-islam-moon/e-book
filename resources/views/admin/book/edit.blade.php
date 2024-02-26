@@ -1,40 +1,54 @@
 <div class="modal-content border-0">
     <div class="modal-header p-3 bg-soft-info">
-        <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit {{ $title }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
     </div>
 
-    <form class="tablelist-form" id="edit_category_form" action="{{ route('product.subCategory.update', $subCategory->id) }}" method="POST">
+    <form class="tablelist-form" id="edit_category_form" action="{{ route('admin.books.update', $books->id) }}" method="POST">
         @csrf
         @method('put')
         <div class="modal-body">
             <div class="row g-3">
 
                 <div class="col-lg-6">
-                    <label for="category_name" class="form-label">Sub-Category Name</label>
-                    <input type="text" id="category_name" name="name" class="form-control" value="{{ $subCategory->name }}" placeholder="Category name">
-                    <span class="error error_name text-danger"></span>
+                    <label for="category_name" class="form-label">{{ $title }} Name</label>
+                    <input type="text" id="category_name" name="name" class="form-control" value="{{ $books->name }}" placeholder="{{ $title }} name">
+                    <span class="error error_e_name text-danger"></span>
                 </div>
 
                 <div class="col-lg-6">
-                    <label for="category" class="form-label">Category Name</label>
-                    <select class="form-control" name="product_category_id" id="category">
-                        <option selected>Select Product Category</option>
-                        @foreach ($productCategories as $productCategory)
-                            <option value="{{ $productCategory->id }}" {{ $subCategory->product_category_id == $productCategory->id ? 'selected' : '' }} >{{ $productCategory->name }}</option>
+                    <label for="books_category" class="form-label">{{ $title }} Category</label>
+                    <select class="form-control" name="books_category" id="category_status">
+                        <option selected> -- Select {{ $title }} Category --</option>
+                        @foreach ( $booksCategories as $booksCategory )
+                            <option value="{{ $booksCategory->id }}" {{ $books->books_category == $booksCategory->id ? 'selected' : '' }} >{{ $booksCategory->name }}</option>
                         @endforeach
                     </select>
-                    <span class="error error_product_category_id text-danger"></span>
+                    <span class="error error_e_books_category text-danger"></span>
                 </div>
 
                 <div class="col-lg-6">
                     <label for="category_status" class="form-label">Status</label>
                     <select class="form-control" name="status" id="category_status">
                         <option selected>Status</option>
-                        <option value="1" {{ $subCategory->status == 1 ? 'selected' : '' }}>Active</option>
-                        <option value="0" {{ $subCategory->status == 0 ? 'selected' : '' }}>De-Active</option>
+                        <option value="1" {{ $books->status == 1 ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ $books->status == 0 ? 'selected' : '' }}>De-Active</option>
                     </select>
+                    <span class="error error_e_status text-danger"></span>
                 </div>
+
+                <div class="col-lg-6">
+                    <label for="img" class="form-label">Cover Photo</label>
+                    <input type="file" id="img" name="img" class="form-control" value="" placeholder="{{ $title }} photo">
+                    <span class="error error_e_img text-danger"></span>
+                </div>
+
+                <div class="col-lg-6">
+                    <label for="name" class="form-label">File</label>
+                    <input type="file" id="file" name="file" class="form-control" value="" placeholder="{{ $title }} file">
+                    <span class="error error_e_file text-danger"></span>
+                </div>
+
 
             </div>
         </div>
@@ -42,7 +56,7 @@
         <div class="modal-footer" style="display: block;">
             <div class="hstack gap-2 justify-content-end">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary update_button">Update Sub-Category</button>
+                <button type="submit" class="btn btn-primary update_button">Update {{ $title }}</button>
             </div>
         </div>
     </form>
@@ -67,9 +81,9 @@
             processData: false,
             success: function(data) {
                 toastr.success(data);
-                $('#editSubCategoryModal').modal('hide');
+                $('#editModal').modal('hide');
                 $('.update_button').prop('type', 'submit');
-                $('.sub_category_table').DataTable().ajax.reload();
+                $('.__table__').DataTable().ajax.reload();
             },
             error: function(err) {
 

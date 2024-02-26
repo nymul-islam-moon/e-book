@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(true);
+            $table->integer('books_category');
             $table->string('file');
             $table->string('img');
             $table->softDeletes();

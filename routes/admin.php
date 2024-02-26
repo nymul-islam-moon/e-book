@@ -44,7 +44,6 @@ Route::middleware(['is_admin'])->prefix('admin')->group(function () {
         Route::delete('/destroy-all', 'destroyAll')->name('admin.books.destroyAll');
         Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('admin.books.permanentDestroyAll');
         Route::delete('/restore-all', 'restoreAll')->name('admin.books.restoreAll');
-        Route::get('/get-data', 'getAllData')->name('admin.books.getAllData');
     });
 
     Route::get('/test', function () {

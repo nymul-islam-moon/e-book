@@ -194,7 +194,7 @@ return [
         /*
          * Image Intervension Service Provider
          */
-        Intervention\Image\ImageServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -229,7 +229,7 @@ return [
         /**
          * Image Interaction
          */
-        'Image' => Intervention\Image\Facades\Image::class,
+
 
 
     ])->toArray(),

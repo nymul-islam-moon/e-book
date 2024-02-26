@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatebookRequest extends FormRequest
+class UpdateBookRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,10 +13,10 @@ class UpdatebookRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
+   /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, mixed>
@@ -24,7 +24,26 @@ class UpdatebookRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'                  => 'required|string|min:3|max:100|unique:books,name,' . $this->books->id,
+            'books_category'        => 'required|integer',
+            'status'                => 'required|integer',
+            'file'                  => 'file|mimes:pdf,doc,docx',
+            'img'                   => 'image|mimes:jpeg,png,jpg,gif'
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.required'         => 'Books name must be required',
+            'name.unique'           => 'Books name already exists',
+            'status.integer'        => 'Select a valid status',
+            'status.required'       => 'Books category must be required'
         ];
     }
 }
