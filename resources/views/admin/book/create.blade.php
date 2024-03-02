@@ -18,9 +18,9 @@
                     <label for="books_category" class="form-label">{{ $title }} Category</label>
                     <select class="form-control" name="books_category" id="category_status">
                         <option selected> -- Select {{ $title }} Category --</option>
-                        @foreach ( $booksCategories as $booksCategory )
+                        {{-- @foreach ( $booksCategories as $booksCategory )
                             <option value="{{ $booksCategory->id }}">{{ $booksCategory->name }}</option>
-                        @endforeach
+                        @endforeach --}}
                     </select>
                     <span class="error error_books_category text-danger"></span>
                 </div>

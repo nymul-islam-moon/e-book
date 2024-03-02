@@ -47,6 +47,12 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('admin.users.index') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
+                        <i class="ri-book-fill"></i> <span data-key="t-widgets">Users</span>
+                    </a>
+                </li>
+
                 {{-- <li class="nav-item">
                     <a class="nav-link menu-link active" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-apps-2-line"></i> <span data-key="t-apps">E-Book</span>

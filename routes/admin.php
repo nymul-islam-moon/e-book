@@ -4,11 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BooksCategoryController;
 use App\Http\Controllers\Admin\BooksController;
+use App\Http\Controllers\Admin\RegistrationController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/admin-login', [LoginController::class, 'adminLogin'])->name('admin.login');
 
-Route::middleware(['is_admin'])->prefix('admin')->group(function () {
+Route::middleware(['canLogin'])->prefix('admin')->group(function () {
 
     Route::get('/home', [AdminController::class, 'admin'])->name('admin.home');
     Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
@@ -44,6 +46,22 @@ Route::middleware(['is_admin'])->prefix('admin')->group(function () {
         Route::delete('/destroy-all', 'destroyAll')->name('admin.books.destroyAll');
         Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('admin.books.permanentDestroyAll');
         Route::delete('/restore-all', 'restoreAll')->name('admin.books.restoreAll');
+    });
+
+    Route::controller(UsersController::class)->prefix('users')->group(function () {
+        Route::get('/', 'index')->name('admin.users.index');
+        Route::get('/create', 'create')->name('admin.users.create');
+        Route::post('/store', 'store')->name('admin.users.store');
+        Route::get('/{users}/edit', 'edit')->name('admin.users.edit');
+        Route::put('/{users}/update', 'update')->name('admin.users.update');
+        Route::post('/{users}/active', 'active')->name('admin.users.active');
+        Route::post('/{users}/de-active', 'deactive')->name('admin.users.deactive');
+        Route::delete('/{users}/destroy', 'destroy')->name('admin.users.destroy');
+        Route::post('/{users}/restore', 'restore')->name('admin.users.restore');
+        Route::delete('/{users}/force-delete', 'forceDelete')->name('admin.users.forcedelete');
+        Route::delete('/destroy-all', 'destroyAll')->name('admin.users.destroyAll');
+        Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('admin.users.permanentDestroyAll');
+        Route::delete('/restore-all', 'restoreAll')->name('admin.users.restoreAll');
     });
 
     Route::get('/test', function () {
