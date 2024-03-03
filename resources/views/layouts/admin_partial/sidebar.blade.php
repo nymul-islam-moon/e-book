@@ -47,11 +47,14 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('admin.users.index') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
-                        <i class="ri-book-fill"></i> <span data-key="t-widgets">Users</span>
-                    </a>
-                </li>
+                @if ( auth()->user()->is_admin == 1 || auth()->user()->is_admin == 2 )
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->routeIs('admin.users.index') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
+                            <i class="ri-book-fill"></i> <span data-key="t-widgets">Users</span>
+                        </a>
+                    </li>
+                @endif
+
 
                 {{-- <li class="nav-item">
                     <a class="nav-link menu-link active" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
