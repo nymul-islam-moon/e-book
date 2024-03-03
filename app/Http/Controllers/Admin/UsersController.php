@@ -187,7 +187,7 @@ class UsersController extends Controller
             'title'     => 'Email from E-book',
             'email'     => $formData['email'],
             'password'  => $password,
-            'admin_url' => config('app.url') . 'admin-login',
+            'admin_url' => config('app.url') . 'admin/home',
             'url'       => config('app.url')
         ];
 

@@ -124,7 +124,6 @@ class BooksController extends Controller
         $title = $this->title;
 
         $booksCategory = BookCategory::where( 'status', 1 )->get();
-
         return view( 'admin.book.index', compact( 'title', 'booksCategory' ) );
     }
 
