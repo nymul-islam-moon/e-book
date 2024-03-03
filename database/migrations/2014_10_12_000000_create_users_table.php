@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->tinyInteger('gender')->nullable();
             $table->boolean('status')->default(true);
-            $table->boolean('is_admin')->nullable();
+            $table->integer('is_admin')->nullable();
             $table->string('address')->nullable();
             $table->string('image')->nullable();
             $table->timestamp('email_verified_at')->nullable();

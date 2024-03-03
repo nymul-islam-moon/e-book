@@ -31,7 +31,8 @@ class StoreUsersRequest extends FormRequest
             'status'                        => 'required|integer',
             'gender'                        => 'required|integer',
             'is_admin'                      => 'required|integer',
-            'image'                         => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif'
+            'image'                         => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif',
+            'address'                       => 'sometimes|nullable|string'
         ];
     }
 

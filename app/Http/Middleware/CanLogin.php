@@ -16,7 +16,7 @@ class CanLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        if ( auth()->user()->status == 1 ) {
+        if ( auth()->user()->status == 1 && auth()->user()->deleted_at == null ) {
             return $next($request);
         }
 

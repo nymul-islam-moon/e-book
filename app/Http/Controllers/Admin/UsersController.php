@@ -56,7 +56,11 @@ class UsersController extends Controller
         }
 
 
-        $users = $query->orderByDesc('id')->where('id', '!=', auth()->id())->get();
+        $users = $query->orderByDesc('id')
+               ->where('id', '!=', auth()->id())
+               ->where( 'is_admin', '!=', 1 )
+               ->get();
+
 
 
         if ( $request->ajax() ) {
@@ -160,21 +164,22 @@ class UsersController extends Controller
      */
    public function store( StoreUsersRequest $request, User $users )
    {
-        $formData               = $request->validated();
+        $formData                   = $request->validated();
 
-        $imgFile                = $request->file('image')->getClientOriginalName();
+        $imgFile                    = $request->file('image')->getClientOriginalName();
 
-        $imgFileArr             = explode('.', $imgFile);
+        $imgFileArr                 = explode('.', $imgFile);
 
-        $imgOriginalName        = $imgFileArr[0];
+        $imgOriginalName            = $imgFileArr[0];
 
-        $imgName                = $imgOriginalName.'.'.$request->image->extension();
+        $imgName                    = $imgOriginalName.'.'.$request->image->extension();
 
         $request->image->move(public_path('uploads/user/img/'), $imgName);
 
-        $formData['img']        = $imgName;
-        $password               = 'User@1234';
-        $formData['password']   = Hash::make($password);
+        $formData['image']          = $imgName;
+        $password                   = 'User@1234';
+        $formData['password']       = Hash::make($password);
+
 
         $users->create( $formData );
 
@@ -210,9 +215,9 @@ class UsersController extends Controller
      */
     public function edit( User $users )
     {
-         $title = $this->title;
-         $user = User::where( 'status', 1 )->get();
-         return view( 'admin.user.edit', compact( 'user', 'title' ) );
+        $title = $this->title;
+
+        return view( 'admin.user.edit', compact( 'users', 'title' ) );
     }
 
     /**
@@ -224,14 +229,14 @@ class UsersController extends Controller
      */
     public function update( UpdateUsersRequest $request, User $users )
     {
-        $formData = $request->validated();
+        $formData                   = $request->validated();
 
-        if ( isset( $formData['img'] ) ) {
+        if ( isset( $formData['image'] ) ) {
 
-            $imgFile            = $request->file('img')->getClientOriginalName();
+            $imgFile            = $request->file('image')->getClientOriginalName();
             $imgFileArr         = explode('.', $imgFile);
             $imgOriginalName    = $imgFileArr[0];
-            $imgName            = $imgOriginalName .'.'. $request->img->extension();
+            $imgName            = $imgOriginalName .'.'. $request->image->extension();
 
             // unlink img
             try {
@@ -240,27 +245,8 @@ class UsersController extends Controller
 
             }
 
-            $request->img->move( public_path('uploads/user/img/'), $imgName );
-            $formData['img']    = $imgName;
-        }
-
-
-        if ( isset( $formData['file'] ) ) {
-
-            $fileName = time() .'.'. $request->file->extension();
-
-            // unlink file
-
-            try {
-                unlink( 'uploads/user/file/' . $users->file );
-
-            } catch ( Exception $ex ) {
-
-            }
-
-            // return
-            $request->file->move(public_path('uploads/user/'), $fileName);
-            $formData['file']   = $fileName;
+            $request->image->move( public_path('uploads/user/img/'), $imgName );
+            $formData['image']    = $imgName;
         }
 
         $users->update($formData);
