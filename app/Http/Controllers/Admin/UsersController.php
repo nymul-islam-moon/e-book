@@ -57,10 +57,9 @@ class UsersController extends Controller
 
 
         $users = $query->orderByDesc('id')
-               ->where('id', '!=', auth()->id())
-               ->where( 'is_admin', '!=', 1 )
-               ->get();
-
+                ->where('id', '!=', auth()->id())
+                ->where( 'is_admin', '!=', 1 )
+                ->get();
 
 
         if ( $request->ajax() ) {
