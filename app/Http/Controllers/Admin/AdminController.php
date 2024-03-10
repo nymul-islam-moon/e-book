@@ -20,7 +20,8 @@ class AdminController extends Controller
 
     public function admin()
     {
-        return view('admin.home');
+        $title = 'Dashboard';
+        return view('admin.home', compact( 'title' ));
     }
 
     /**

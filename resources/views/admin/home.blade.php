@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
 @section('admin_content')
-<!-- ============================================================== -->
-<!-- Start right Content here -->
-<!-- ============================================================== -->
+
+@section('title', $title)
+
 <div class="main-content">
 
     <div class="page-content">
