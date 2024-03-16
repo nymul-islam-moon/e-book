@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('buy_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->integer('month')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('subscription_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('subscription_id')->references('id')->on('subscriptions')->onDelete('CASCADE');
         });
     }
 
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seuscription');
+        Schema::dropIfExists('buy_subscriptions');
     }
 };

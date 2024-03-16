@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Subscription;
-use App\Http\Requests\StoreSubscriptionRequest;
-use App\Http\Requests\UpdateSubscriptionRequest;
+use App\Models\BuySubscription;
+use App\Http\Requests\StoreBuySubscriptionRequest;
+use App\Http\Requests\UpdateBuySubscriptionRequest;
 
-class SubscriptionController extends Controller
+class BuySubscriptionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-        return view('front.checkout');
+        //
     }
 
     /**
@@ -25,27 +25,27 @@ class SubscriptionController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreSubscriptionRequest  $request
+     * @param  \App\Http\Requests\StoreBuySubscriptionRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSubscriptionRequest $request)
+    public function store(StoreBuySubscriptionRequest $request)
     {
-        $isSubscribed = false;
-        return response()->json(['subscribed' => $isSubscribed]);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Subscription  $subscription
+     * @param  \App\Models\BuySubscription  $buySubscription
      * @return \Illuminate\Http\Response
      */
-    public function show(Subscription $subscription)
+    public function show(BuySubscription $buySubscription)
     {
         //
     }
@@ -53,10 +53,10 @@ class SubscriptionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Subscription  $subscription
+     * @param  \App\Models\BuySubscription  $buySubscription
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subscription $subscription)
+    public function edit(BuySubscription $buySubscription)
     {
         //
     }
@@ -64,11 +64,11 @@ class SubscriptionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateSubscriptionRequest  $request
-     * @param  \App\Models\Subscription  $subscription
+     * @param  \App\Http\Requests\UpdateBuySubscriptionRequest  $request
+     * @param  \App\Models\BuySubscription  $buySubscription
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSubscriptionRequest $request, Subscription $subscription)
+    public function update(UpdateBuySubscriptionRequest $request, BuySubscription $buySubscription)
     {
         //
     }
@@ -76,10 +76,10 @@ class SubscriptionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Subscription  $subscription
+     * @param  \App\Models\BuySubscription  $buySubscription
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subscription $subscription)
+    public function destroy(BuySubscription $buySubscription)
     {
         //
     }

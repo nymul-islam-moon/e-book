@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->tinyInteger('gender')->nullable();
-            $table->boolean('status')->default(true);
+            $table->tinyInteger('status')->default(true);
             $table->integer('is_admin')->nullable();
             $table->string('address')->nullable();
             $table->string('image')->nullable();

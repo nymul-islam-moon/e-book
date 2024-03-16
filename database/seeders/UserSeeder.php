@@ -21,13 +21,13 @@ class UserSeeder extends Seeder
 
         $user = [
             [
-                'id' => '1', 'first_name' => 'Nymul Islam','last_name' => 'Moon','email' => 'towkir1997islam@gmail.com', 'phone' => '01786287789', 'gender' => 1, 'is_admin' => 1, 'password' => Hash::make('admin@123'), 'address' => 'Kaderabad housing, Dhaka',
+                'id' => '1', 'first_name' => 'Nymul Islam','last_name' => 'Moon','email' => 'towkir1997islam@gmail.com', 'phone' => '01786287789', 'gender' => 1, 'status' => 1, 'is_admin' => 1, 'password' => Hash::make('admin@123'), 'address' => 'Kaderabad housing, Dhaka',
             ],
             [
-                'id' => '2', 'first_name' => 'Md.','last_name' => 'Mehedi Islam','email' => 'mehediislamhridoy6@gmail.com', 'phone' => '01681970011', 'gender' => 1, 'is_admin' => 1, 'password' => Hash::make('admin@123'), 'address' => 'Dhaka',
+                'id' => '2', 'first_name' => 'Md.','last_name' => 'Mehedi Islam','email' => 'mehediislamhridoy6@gmail.com', 'phone' => '01681970011', 'gender' => 1, 'status' => 1, 'is_admin' => 1, 'password' => Hash::make('admin@123'), 'address' => 'Dhaka',
             ],
             [
-                'id' => '3', 'first_name' => 'Munnu Jan','last_name' => 'Khanam','email' => 'munnujan1999@gmail.com', 'phone' => '01306537967', 'gender' => 1, 'is_admin' => 1, 'password' => Hash::make('admin@123'), 'address' => 'Dhaka',
+                'id' => '3', 'first_name' => 'Munnu Jan','last_name' => 'Khanam','email' => 'munnujan1999@gmail.com', 'phone' => '01306537967', 'gender' => 1, 'status' => 1, 'is_admin' => 1, 'password' => Hash::make('admin@123'), 'address' => 'Dhaka',
             ]
         ];
 
