@@ -35,46 +35,45 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card">
-
                         <div class="card-header border-0">
                             <div class="d-flex align-items-center">
                                 <h5 class="card-title mb-0 flex-grow-1">All {{ $title }}</h5>
                                 <div class="flex-shrink-0">
                                    <div class="d-flex flex-wrap gap-2">
-
                                         {{-- <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#addModal"><i class="ri-add-line align-bottom me-1"></i> Create Task</button> --}}
-                                        <button class="btn btn-danger add-btn" href="{{ route('admin.subscription.create') }}" id="add_btn"><i class="ri-add-line align-bottom me-1"></i> Create {{ $title }}</button>
-
-                                        <button class="btn btn-soft-danger" id="temp_delete_all"><i class="ri-delete-bin-2-line"></i></button>
-                                        <button class="btn btn-soft-danger d-none" id="permanent_delete_all"><i class="ri-delete-bin-2-line"></i></button>
-                                        <button class="btn btn-soft-danger d-none" id="restore_all_selected"><i class="ri-refresh-line"></i></button>
+                                        <button class="btn btn-danger add-btn" href="{{ route('admin.buySubscription.create') }}" id="add_btn"><i class="ri-add-line align-bottom me-1"></i> Create {{ $title }}</button>
+                                        @if (auth()->user()->is_admin != 3)
+                                            <button class="btn btn-soft-danger" id="temp_delete_all"><i class="ri-delete-bin-2-line"></i></button>
+                                            <button class="btn btn-soft-danger d-none" id="permanent_delete_all"><i class="ri-delete-bin-2-line"></i></button>
+                                            <button class="btn btn-soft-danger d-none" id="restore_all_selected"><i class="ri-refresh-line"></i></button>
+                                        @endif
                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body border border-dashed border-end-0 border-start-0">
+                            @if ( auth()->user()->is_admin != 3 )
+                                <div class="row g-3">
+                                    <div class="col-xxl-2 col-sm-4">
+                                        <div class="input-light">
+                                            <select class="form-control submitable" name="f_soft_delete" id="f_soft_delete">
+                                                <option selected value="1">All {{ $title }}</option>
+                                                <option value="2">Trash {{ $title }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
-                            <div class="row g-3">
-
-                                <div class="col-xxl-2 col-sm-4">
-                                    <div class="input-light">
-                                        <select class="form-control submitable" name="f_soft_delete" id="f_soft_delete">
-                                            <option selected value="1">All {{ $title }}</option>
-                                            <option value="2">Trash {{ $title }}</option>
-                                        </select>
+                                    <div class="col-xxl-2 col-sm-4">
+                                        <div class="input-light">
+                                            <select class="form-control submitable" name="f_status" id="f_status">
+                                                <option value="" Selected>All Status</option>
+                                                <option value="1">Active</option>
+                                                <option value="2">De-Active</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="col-xxl-2 col-sm-4">
-                                    <div class="input-light">
-                                        <select class="form-control submitable" name="f_status" id="f_status">
-                                            <option value="" Selected>All Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">De-Active</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            @endif
                         </div>
 
 
@@ -93,6 +92,7 @@
                                                 <th scope="col">Action</th>
                                                 <th scope="col">User Name</th>
                                                 <th scope="col">{{ $title }} Expire Date</th>
+                                                <th scope="col">{{ $title }} Status</th>
                                                 <th scope="col">Phone Number</th>
                                                 <th scope="col">Tansection Number</th>
                                             </tr>
@@ -167,7 +167,7 @@
                 [5, 10, 25, 50, 100, 500, 1000, "All"],
             ],
             ajax: {
-                url: "{{ route('admin.subscription.index') }}",
+                url: "{{ route('admin.buySubscription.index') }}",
                 data: function(e) {
                     // e.center_id = $('#center_id').val();
                     e.f_status = $('#f_status').val();
@@ -180,6 +180,7 @@
                 {data: 'action', name: 'action'},
                 {data: 'user', name: 'user'},
                 {data: 'exp_date', name: 'exp_date'},
+                {data: 'status', name: 'status'},
                 {data: 'phone_num', name: 'phone_num'},
                 {data: 'trans_num', name: 'trans_num'},
             ]
@@ -468,7 +469,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('admin.books.destroyAll') }}",
+                        url: "{{ route('admin.buySubscription.destroyAll') }}",
                         type: 'DELETE',
                         data: {
                             ids:all_ids,
@@ -512,7 +513,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('admin.books.restoreAll') }}",
+                        url: "{{ route('admin.buySubscription.restoreAll') }}",
                         type: 'DELETE',
                         data: {
                             ids:all_ids,
@@ -556,7 +557,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('admin.books.permanentDestroyAll') }}",
+                        url: "{{ route('admin.buySubscription.permanentDestroyAll') }}",
                         type: 'DELETE',
                         data: {
                             ids:all_ids,

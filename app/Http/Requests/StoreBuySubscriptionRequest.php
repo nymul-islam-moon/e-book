@@ -24,7 +24,7 @@ class StoreBuySubscriptionRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'                   => 'required|integer',
+            'user_id'                   => 'sometimes|nullable|integer',
             'subscription_id'           => 'required|integer',
             'phone_num'                 => 'required|string',
             'trans_num'                 => 'required|string',
@@ -40,7 +40,6 @@ class StoreBuySubscriptionRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_id.required'                 => 'Select a valid user id',
             'subscription_id.required'         => 'Select a valid subscription id',
             'phone_num.required'               => 'Phone Number must be require',
             'trans_num.required'               => 'Transaction Number must be require',

@@ -271,6 +271,7 @@ class BooksController extends Controller
      */
     public function active(Books $books)
     {
+
         $books->status = 1;
         $books->save();
         return response()->json("$this->title activated successfully");

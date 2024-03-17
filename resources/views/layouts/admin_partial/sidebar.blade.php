@@ -35,11 +35,13 @@
                 </li>
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">E-Book</span></li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('book.category.index') ? 'active' : '' }}" href="{{ route('book.category.index') }}">
-                        <i class="ri-book-mark-line"></i> <span data-key="t-widgets">Category</span>
-                    </a>
-                </li>
+                @if (auth()->user()->is_admin != 3)
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->routeIs('book.category.index') ? 'active' : '' }}" href="{{ route('book.category.index') }}">
+                            <i class="ri-book-mark-line"></i> <span data-key="t-widgets">Category</span>
+                        </a>
+                    </li>
+                @endif
 
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('admin.books.index') ? 'active' : '' }}" href="{{ route('admin.books.index') }}">
@@ -56,7 +58,7 @@
                 @endif
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('admin.subscription.index') ? 'active' : '' }}" href="{{ route('admin.subscription.index') }}">
+                    <a class="nav-link menu-link {{ request()->routeIs('admin.buySubscription.index') ? 'active' : '' }}" href="{{ route('admin.buySubscription.index') }}">
                         <i class="ri-book-fill"></i> <span data-key="t-widgets">Subsctiption</span>
                     </a>
                 </li>

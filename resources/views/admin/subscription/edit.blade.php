@@ -4,7 +4,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
     </div>
 
-    <form class="tablelist-form" id="edit_category_form" action="{{ route('admin.subscription.update', $buySubscription->id) }}" method="POST">
+    <form class="tablelist-form" id="edit_category_form" action="{{ route('admin.buySubscription.update', 3) }}" method="POST">
         @csrf
         @method('put')
         <div class="modal-body">

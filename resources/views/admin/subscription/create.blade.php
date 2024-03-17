@@ -3,7 +3,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Add {{ $title }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
     </div>
-    <form class="tablelist-form" autocomplete="off" id="add_form" action="{{ route('admin.subscription.store') }}" method="POST">
+    <form class="tablelist-form" autocomplete="off" id="add_form" action="{{ route('admin.buySubscription.store') }}" method="POST">
         @csrf
         @method('POST')
         <div class="modal-body">
@@ -11,12 +11,16 @@
 
                 <div class="col-lg-6">
                     <label for="category_status" class="form-label">User</label>
-                    <select class="form-control" name="user_id" id="category_status">
-                        <option selected>Users</option>
-                        @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->first_name }} {{  $user->last_name  }} ( {{ $user->phone }} )</option>
-                        @endforeach
-                    </select>
+                    @if ( auth()->user()->is_admin == 3 )
+                        <input type="text" class="form-control" value="{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}" readonly>
+                    @else
+                        <select class="form-control" name="user_id" id="category_status">
+                            <option selected>Users</option>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->first_name }} {{  $user->last_name  }} ( {{ $user->phone }} )</option>
+                            @endforeach
+                        </select>
+                    @endif
                     <span class="error error_user_id text-danger"></span>
                 </div>
 

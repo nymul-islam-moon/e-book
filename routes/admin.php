@@ -67,19 +67,19 @@ Route::middleware(['canLogin'])->prefix('admin')->group(function () {
 
 
     Route::controller(BuySubscriptionController::class)->prefix('buy/subscription')->group(function () {
-        Route::get('/', 'index')->name('admin.subscription.index');
-        Route::get('/create', 'create')->name('admin.subscription.create');
-        Route::post('/store', 'store')->name('admin.subscription.store');
-        Route::get('/{subscription}/edit', 'edit')->name('admin.subscription.edit');
-        Route::put('/{subscription}/update', 'update')->name('admin.subscription.update');
-        Route::post('/{subscription}/approved', 'active')->name('admin.subscription.approved');
-        Route::post('/{subscription}/de-active', 'deactive')->name('admin.subscription.deactive');
-        Route::delete('/{subscription}/destroy', 'destroy')->name('admin.subscription.destroy');
-        Route::post('/{subscription}/restore', 'restore')->name('admin.subscription.restore');
-        Route::delete('/{subscription}/force-delete', 'forceDelete')->name('admin.subscription.forcedelete');
-        Route::delete('/destroy-all', 'destroyAll')->name('admin.subscription.destroyAll');
-        Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('admin.subscription.permanentDestroyAll');
-        Route::delete('/restore-all', 'restoreAll')->name('admin.subscription.restoreAll');
+        Route::get('/', 'index')->name('admin.buySubscription.index');
+        Route::get('/create', 'create')->name('admin.buySubscription.create');
+        Route::post('/store', 'store')->name('admin.buySubscription.store');
+        Route::get('/{buySubscription}/edit', 'edit')->name('admin.buySubscription.edit');
+        Route::put('/{buySubscription}/update', 'update')->name('admin.buySubscription.update');
+        Route::post('/{buySubscription}/active', 'active')->name('admin.buySubscription.active');
+        Route::post('/{buySubscription}/de-active', 'deactive')->name('admin.buySubscription.deactive');
+        Route::delete('/{buySubscription}/destroy', 'destroy')->name('admin.buySubscription.destroy');
+        Route::post('/{buySubscription}/restore', 'restore')->name('admin.buySubscription.restore');
+        Route::delete('/{buySubscription}/force-delete', 'forceDelete')->name('admin.buySubscription.forcedelete');
+        Route::delete('/destroy-all', 'destroyAll')->name('admin.buySubscription.destroyAll');
+        Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('admin.buySubscription.permanentDestroyAll');
+        Route::delete('/restore-all', 'restoreAll')->name('admin.buySubscription.restoreAll');
     });
 
 

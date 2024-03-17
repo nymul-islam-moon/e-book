@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('buy_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->dateTime('exp_date');
             $table->string('phone_num');
             $table->string('trans_num');
