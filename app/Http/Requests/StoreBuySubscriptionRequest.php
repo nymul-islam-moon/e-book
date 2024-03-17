@@ -13,7 +13,7 @@ class StoreBuySubscriptionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,27 @@ class StoreBuySubscriptionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_id'                   => 'required|integer',
+            'subscription_id'           => 'required|integer',
+            'phone_num'                 => 'required|string',
+            'trans_num'                 => 'required|string',
+
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'user_id.required'                 => 'Select a valid user id',
+            'subscription_id.required'         => 'Select a valid subscription id',
+            'phone_num.required'               => 'Phone Number must be require',
+            'trans_num.required'               => 'Transaction Number must be require',
+
         ];
     }
 }

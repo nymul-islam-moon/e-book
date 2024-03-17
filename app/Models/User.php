@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'gender',
         'is_admin',
+        'books_count',
         'image',
         'status',
         'address',

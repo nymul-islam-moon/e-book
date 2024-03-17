@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BooksCategoryController;
 use App\Http\Controllers\Admin\BooksController;
+use App\Http\Controllers\Admin\BuySubscriptionController;
 use App\Http\Controllers\Admin\RegistrationController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\LoginController;
@@ -63,6 +64,25 @@ Route::middleware(['canLogin'])->prefix('admin')->group(function () {
         Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('admin.users.permanentDestroyAll');
         Route::delete('/restore-all', 'restoreAll')->name('admin.users.restoreAll');
     });
+
+
+    Route::controller(BuySubscriptionController::class)->prefix('buy/subscription')->group(function () {
+        Route::get('/', 'index')->name('admin.subscription.index');
+        Route::get('/create', 'create')->name('admin.subscription.create');
+        Route::post('/store', 'store')->name('admin.subscription.store');
+        Route::get('/{subscription}/edit', 'edit')->name('admin.subscription.edit');
+        Route::put('/{subscription}/update', 'update')->name('admin.subscription.update');
+        Route::post('/{subscription}/approved', 'active')->name('admin.subscription.approved');
+        Route::post('/{subscription}/de-active', 'deactive')->name('admin.subscription.deactive');
+        Route::delete('/{subscription}/destroy', 'destroy')->name('admin.subscription.destroy');
+        Route::post('/{subscription}/restore', 'restore')->name('admin.subscription.restore');
+        Route::delete('/{subscription}/force-delete', 'forceDelete')->name('admin.subscription.forcedelete');
+        Route::delete('/destroy-all', 'destroyAll')->name('admin.subscription.destroyAll');
+        Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('admin.subscription.permanentDestroyAll');
+        Route::delete('/restore-all', 'restoreAll')->name('admin.subscription.restoreAll');
+    });
+
+
 
     Route::get('/test', function () {
         return view('admin.test.index');

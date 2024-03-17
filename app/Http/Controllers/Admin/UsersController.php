@@ -164,18 +164,16 @@ class UsersController extends Controller
    public function store( StoreUsersRequest $request, User $users )
    {
         $formData                   = $request->validated();
+        if ($request->hasFile('image')) {
 
-        $imgFile                    = $request->file('image')->getClientOriginalName();
+            $imgFile                    = $request->file('image')->getClientOriginalName();
+            $imgFileArr                 = explode('.', $imgFile);
+            $imgOriginalName            = $imgFileArr[0];
+            $imgName                    = $imgOriginalName.'.'.$request->image->extension();
+            $request->image->move(public_path('uploads/user/img/'), $imgName);
+            $formData['image']          = $imgName;
+        }
 
-        $imgFileArr                 = explode('.', $imgFile);
-
-        $imgOriginalName            = $imgFileArr[0];
-
-        $imgName                    = $imgOriginalName.'.'.$request->image->extension();
-
-        $request->image->move(public_path('uploads/user/img/'), $imgName);
-
-        $formData['image']          = $imgName;
         $password                   = 'User@1234';
         $formData['password']       = Hash::make($password);
 

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->tinyInteger('gender')->nullable();
             $table->tinyInteger('status')->default(true);
             $table->integer('is_admin')->nullable();
+            $table->integer('books_count')->nullable();
             $table->string('address')->nullable();
             $table->string('image')->nullable();
             $table->timestamp('email_verified_at')->nullable();
