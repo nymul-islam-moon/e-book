@@ -80,9 +80,15 @@
 
                 $('.submit_button').prop('type', 'submit');
 
-                $('.__table__').DataTable().ajax.reload();
 
-                toastr.success(data)
+                if ( data[0] == 'error' ) {
+                    toastr.error( data[1] );
+
+                } else {
+                    $('.__table__').DataTable().ajax.reload();
+                    toastr.success(data)
+                }
+
 
             },
             error: function(err) {

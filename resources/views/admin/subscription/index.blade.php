@@ -195,7 +195,7 @@
          * Open Edit Modal
          * */
 
-         $(document).on('click', '#add_btn', function(e) {
+        $(document).on('click', '#add_btn', function(e) {
             e.preventDefault();
 
             var url = $(this).attr('href');

@@ -158,6 +158,14 @@ class BuySubscriptionController extends Controller
             $formData['user_id'] = auth()->user()->id;
         }
 
+        $check_buy_subscription = BuySubscription::where( 'user_id', '=', $formData['user_id'] )->orderBy('created_at', 'desc')->first();
+
+        if ( $check_buy_subscription->exp_date > Carbon::now()->format('Y-m-d') ) {
+
+            return response()->json(['error', 'You can buy subscription after ' . $check_buy_subscription->exp_date]);
+        }
+
+
         // Get the subscription details from the database
         $subscription = Subscription::select('month')->where('id', $formData['subscription_id'])->first();
 
