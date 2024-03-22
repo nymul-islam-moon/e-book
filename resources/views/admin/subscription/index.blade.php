@@ -62,16 +62,6 @@
                                             </select>
                                         </div>
                                     </div>
-
-                                    <div class="col-xxl-2 col-sm-4">
-                                        <div class="input-light">
-                                            <select class="form-control submitable" name="f_status" id="f_status">
-                                                <option value="" Selected>All Status</option>
-                                                <option value="1">Active</option>
-                                                <option value="2">De-Active</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
                             @endif
                         </div>

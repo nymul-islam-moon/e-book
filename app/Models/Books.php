@@ -15,4 +15,6 @@ class Books extends Model
     protected $table = 'books';
 
     protected $fillable = [ 'name', 'status', 'file', 'img', 'books_category' ];
+
 }
+

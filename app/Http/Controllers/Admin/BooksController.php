@@ -174,12 +174,12 @@ class BooksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  object  $book
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( Books $book )
     {
-        //
+        dd('here');
     }
 
     /**

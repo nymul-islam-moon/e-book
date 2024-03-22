@@ -14,6 +14,13 @@
         {{-- My custome link --}}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
+        <style>
+            a {
+                text-decoration: none;
+                color: black;
+            }
+        </style>
+
     </head>
 
     <body>
@@ -63,6 +70,20 @@
 						</div>
 					</div>
 
+                    <form method="GET">
+                        <div class="input-group mb-3">
+                          <input
+                            type="text"
+                            name="search"
+                            value="{{ request()->get('search') }}"
+                            class="form-control"
+                            placeholder="Search..."
+                            aria-label="Search"
+                            aria-describedby="button-addon2">
+                          <button class="btn btn-success" type="submit" id="button-addon2">Search</button>
+                        </div>
+                    </form>
+
 					<div class="row align-items-center rows-products">
 						<!-- Single -->
                         @foreach ($books as $book)
@@ -77,7 +98,7 @@
                                         <div class="" style="text-align: center">
                                             <div>
                                                 {{-- <div class="elso_titl"><span class="small">{{ $book->books_category }}</span></div> --}}
-                                                <h1 class=""><a href="#"></a>{{ $book->name }}</h1>
+                                                <h1 class=""><a href="{{ route('front.book.show', $book->id) }}">{{ $book->name }}</a></h1>
                                                 {{-- <div class="elis_rty"><span class="ft-bold text-dark fs-sm">$99 - $129</span></div> --}}
                                             </div>
                                         </div>
