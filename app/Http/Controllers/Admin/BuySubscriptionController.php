@@ -160,7 +160,7 @@ class BuySubscriptionController extends Controller
 
         $check_buy_subscription = BuySubscription::where( 'user_id', '=', $formData['user_id'] )->orderBy('created_at', 'desc')->first();
 
-        if ( $check_buy_subscription->exp_date > Carbon::now()->format('Y-m-d') ) {
+        if ( isset( $check_buy_subscription ) && $check_buy_subscription->exp_date > Carbon::now()->format('Y-m-d') ) {
 
             return response()->json(['error', 'You can buy subscription after ' . $check_buy_subscription->exp_date]);
         }
