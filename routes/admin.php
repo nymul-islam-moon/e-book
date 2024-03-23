@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BuySubscriptionController;
 use App\Http\Controllers\Admin\RegistrationController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/admin-login', [LoginController::class, 'adminLogin'])->name('admin.login');
 
@@ -80,6 +81,23 @@ Route::middleware(['canLogin'])->prefix('admin')->group(function () {
         Route::delete('/destroy-all', 'destroyAll')->name('admin.buySubscription.destroyAll');
         Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('admin.buySubscription.permanentDestroyAll');
         Route::delete('/restore-all', 'restoreAll')->name('admin.buySubscription.restoreAll');
+    });
+
+
+    Route::controller(ProfileController::class)->prefix('profile')->group(function () {
+        Route::get('/', 'index')->name('admin.profile.index');
+        Route::get('/create', 'create')->name('admin.profile.create');
+        Route::post('/store', 'store')->name('admin.profile.store');
+        Route::get('/{profile}/edit', 'edit')->name('admin.profile.edit');
+        Route::put('/{profile}/update', 'update')->name('admin.profile.update');
+        Route::post('/{profile}/active', 'active')->name('admin.profile.active');
+        Route::post('/{profile}/de-active', 'deactive')->name('admin.profile.deactive');
+        Route::delete('/{profile}/destroy', 'destroy')->name('admin.profile.destroy');
+        Route::post('/{profile}/restore', 'restore')->name('admin.profile.restore');
+        Route::delete('/{profile}/force-delete', 'forceDelete')->name('admin.profile.forcedelete');
+        Route::delete('/destroy-all', 'destroyAll')->name('admin.profile.destroyAll');
+        Route::delete('/permanent-destroy-all', 'permanentDestroyAll')->name('admin.profile.permanentDestroyAll');
+        Route::delete('/restore-all', 'restoreAll')->name('admin.profile.restoreAll');
     });
 
 

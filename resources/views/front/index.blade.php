@@ -47,7 +47,7 @@
 
 							<div class="currency-selector dropdown js-dropdown float-right mr-3">
 								@if ( auth()->check() )
-                                    {{-- <a href="/" class="text-muted medium"><i class="lni lni-user mr-1"></i><h5>{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</h5></a> --}}
+                                    <a href="{{ route('admin.profile.index') }}" class="text-muted medium"><i class="lni lni-user mr-1"></i><h5>{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</h5></a>
                                 @else
                                     <a href="{{ route('front.registration.index') }}" class="text-muted medium"><i class="lni lni-user mr-1"></i>Sign Up</a>
                                 @endif

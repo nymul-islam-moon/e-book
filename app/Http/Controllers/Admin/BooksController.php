@@ -55,7 +55,12 @@ class BooksController extends Controller
         }
 
 
-        $books = $query->orderByDesc('id')->get();
+
+        if ( auth()->user()->is_admin == 3 ) {
+            $books = $query->orderByDesc('id')->where('user_id', '=', auth()->user()->id)->get();
+        } else {
+            $books = $query->orderByDesc('id')->get();
+        }
 
 
         if ( $request->ajax() ) {
@@ -162,7 +167,7 @@ class BooksController extends Controller
         $fileName = time().'.'.$request->file->extension();
         $request->img->move(public_path('uploads/books/img/'), $imgName);
         $request->file->move(public_path('uploads/books/file/'), $fileName);
-
+        $formData['user_id'] = auth()->user()->id;
         $formData['file']   = $fileName;
         $formData['img']    = $imgName;
 
