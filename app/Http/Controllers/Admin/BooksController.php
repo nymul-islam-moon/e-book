@@ -7,6 +7,9 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Books;
 use App\Models\BookCategory;
+use App\Models\BuySubscription;
+use App\Models\Subscription;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -184,8 +187,28 @@ class BooksController extends Controller
      */
     public function show( Books $book )
     {
-        return view('front.read', compact('book'));
-        // return response()->file( public_path('uploads/books/file/test.pdf'),['content-type'=>'application/pdf'] );
+        if (auth()->user()->is_admin == 3) {
+            $subscription = BuySubscription::where('user_id', '=', auth()->user()->id)->where('status', '=', 1)->first();
+
+            $currentDate = Carbon::now()->format('Y-m-d');
+
+            if( isset( $subscription ) ) {
+
+                if ( $subscription->exp_date >= $currentDate  ) {
+                    return view('front.read', compact('book'));
+                } else {
+                    return redirect()->route('admin.buySubscription.index');
+                }
+
+            } else if( auth()->user()->count >= 25 ) {
+                return view('front.read', compact('book'));
+            } else {
+                return redirect()->route('admin.buySubscription.index');
+            }
+
+        } else {
+            return view('front.read', compact('book'));
+        }
     }
 
     /**
