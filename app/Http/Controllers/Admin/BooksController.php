@@ -184,7 +184,8 @@ class BooksController extends Controller
      */
     public function show( Books $book )
     {
-        return response()->file( public_path('uploads/books/file/test.pdf'),['content-type'=>'application/pdf'] );
+        return view('front.read', compact('book'));
+        // return response()->file( public_path('uploads/books/file/test.pdf'),['content-type'=>'application/pdf'] );
     }
 
     /**

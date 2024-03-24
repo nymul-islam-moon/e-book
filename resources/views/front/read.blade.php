@@ -19,6 +19,10 @@
                 text-decoration: none;
                 color: black;
             }
+            iframe {
+                height: 1000%;
+                width: 100%;
+            }
         </style>
 
     </head>
@@ -70,31 +74,10 @@
 						</div>
 					</div>
 
-                    <form method="GET">
-                        <div class="input-group mb-3">
-                          <input
-                            type="text"
-                            name="search"
-                            value="{{ request()->get('search') }}"
-                            class="form-control"
-                            placeholder="Search..."
-                            aria-label="Search"
-                            aria-describedby="button-addon2">
-                          <button class="btn btn-success" type="submit" id="button-addon2">Search</button>
-                        </div>
-                    </form>
-
-					<div class="row align-items-center rows-products">
-                        <div class="pdf-container">
-                            <object data="{{ asset('uploads/books/file/1711261745.pdf') }}" type="application/pdf">
-                              <p>It appears you don't have a PDF plugin for this browser. No biggie... you can <a href="example.pdf">click here to download the PDF file.</a></p>
-                            </object>
-                        </div>
-					</div>
 
 					<div class="row justify-content-center">
-						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <iframe src="{{ asset('uploads/books/file') }}/{{ $book->file }}" frameborder="0" allowfullscreen></iframe>
 						</div>
 					</div>
 
