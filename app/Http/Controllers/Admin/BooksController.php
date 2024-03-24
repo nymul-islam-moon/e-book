@@ -210,7 +210,7 @@ class BooksController extends Controller
                     return redirect()->route('admin.buySubscription.index');
                 }
 
-            } else if( auth()->user()->count >= 25 ) {
+            } else if( auth()->user()->books_count >= 25 ) {
                 return view('front.read', compact('book'));
             } else {
                 return redirect()->route('admin.buySubscription.index');
