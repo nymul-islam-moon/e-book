@@ -162,9 +162,9 @@ class BooksController extends Controller
 
         $imgOriginalName = $imgFileArr[0];
 
-        $imgName = $imgOriginalName.'.'.$request->img->extension();
+        $imgName = time() . '.' . $imgOriginalName.'.'.$request->img->extension();
 
-        $fileName = time().'.'.$request->file->extension();
+        $fileName = time() .'.'.$request->file->extension();
         $request->img->move(public_path('uploads/books/img/'), $imgName);
         $request->file->move(public_path('uploads/books/file/'), $fileName);
         $formData['user_id'] = auth()->user()->id;
@@ -184,7 +184,7 @@ class BooksController extends Controller
      */
     public function show( Books $book )
     {
-        dd('here');
+        return response()->file( public_path('uploads/books/file/test.pdf'),['content-type'=>'application/pdf'] );
     }
 
     /**
@@ -216,11 +216,11 @@ class BooksController extends Controller
             $imgFile            = $request->file('img')->getClientOriginalName();
             $imgFileArr         = explode('.', $imgFile);
             $imgOriginalName    = $imgFileArr[0];
-            $imgName            = $imgOriginalName .'.'. $request->img->extension();
+            $imgName            = time() . '.' . $imgOriginalName .'.'. $request->img->extension();
 
             // unlink img
             try {
-                unlink( 'uploads/books/' . $books->img );
+                unlink( 'uploads/books/img/' . $books->img );
             } catch ( Exception $ex ) {
 
             }
@@ -245,7 +245,7 @@ class BooksController extends Controller
             }
 
             // return
-            $request->file->move(public_path('uploads/books/'), $fileName);
+            $request->file->move(public_path('uploads/books/file/'), $fileName);
             $formData['file']   = $fileName;
         }
 

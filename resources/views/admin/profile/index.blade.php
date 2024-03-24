@@ -34,31 +34,44 @@
 
             <div class="row">
                 <div class="col-xl-12">
-                    <form class="row g-3">
+                    <form class="row g-3" action="{{ route('admin.profile.update', $user->id) }}" method="POST" id="update_profile_form">
+                        @csrf
+                        @method('PUT')
                         <div class="col-md-6">
                             <label for="first_name" class="form-label">First Name</label>
-                            <input type="text" name="first_name" class="form-control" id="first_name">
+                            <input type="text" class="form-control" name="first_name" id="first_name" value="{{ $user->first_name }}" placeholder="Enter your first name" >
+                            <span class="error error_first_name text-danger"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label for="last_name" class="form-label">Last Name</label>
-                            <input type="text" name="last_name" class="form-control" id="last_name">
+                            <input type="text" name="last_name" class="form-control" id="last_name" value="{{ $user->last_name }}">
+                            <span class="error error_last_name text-danger"></span>
                         </div>
 
                         <div class="col-6">
                             <label for="inputAddress" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                            <input type="text" class="form-control" id="inputAddress" name="address" placeholder="1234 Main St" value="{{ $user->address }}" >
+                            <span class="error error_address text-danger"></span>
                         </div>
 
                         <div class="col-md-6">
+                            <label for="image" class="form-label">Image</label>
+                            <input type="file" name="image" class="form-control" id="image">
+                            <span class="error error_image text-danger"></span>
+                        </div>
+
+                        {{-- <div class="col-md-6">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password">
+                            <input type="password" name="password" class="form-control" id="password">
+                            <span class="error error_password text-danger"></span>
                         </div>
 
                         <div class="col-md-6">
-                            <label for="password" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="password">
-                        </div>
+                            <label for="password_confirmation" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
+                            <span class="error error_password_confirmation text-danger"></span>
+                        </div> --}}
 
                         <div class="col-12">
                           <button type="submit" class="btn btn-primary">Update Profile</button>
@@ -99,5 +112,39 @@
 
 <script>
 
+    $(document).on('submit', '#update_profile_form', function(e) {
+        e.preventDefault();
+
+        var url = $(this).attr('action');
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                toastr.success(data);
+            },
+            error: function(err) {
+
+                $('.error').html('');
+
+                if (err.status == 0) {
+                    toastr.error('Net Connetion Error. Reload This Page.');
+                    return;
+                } else if (err.status == 500) {
+                    toastr.error('Server error. Please contact to the support team.');
+                    return;
+                }
+                $.each(err.responseJSON.errors, function(key, error) {
+                    $('.error_' + key + '').html(error[0]);
+                });
+            }
+        });
+
+
+    });
 </script>
 @endpush

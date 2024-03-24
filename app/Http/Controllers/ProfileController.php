@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProfileRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -30,7 +32,9 @@ class ProfileController extends Controller
     {
         $title = $this->title;
 
-        return view('admin.profile.index', compact('title'));
+        $user = User::where('id', '=', auth()->user()->id)->first();
+
+        return view('admin.profile.index', compact('title', 'user'));
     }
 
     /**
@@ -83,9 +87,33 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProfileRequest $request, User $profile)
     {
-        //
+        $formData               = $request->validated();
+
+        if ( isset( $formData['image'] ) ) {
+
+            $imgFile            = $request->file('image')->getClientOriginalName();
+            $imgFileArr         = explode('.', $imgFile);
+            $imgOriginalName    = $imgFileArr[0];
+            $imgName            = $imgOriginalName .'.'. $request->image->extension();
+
+            // unlink img
+            if ( isset($profile->image) ) {
+                try {
+                    unlink( 'uploads/user/img/' . $profile->img );
+                } catch ( Exception $ex ) {
+
+                }
+            }
+
+            $request->image->move( public_path('uploads/user/img/'), $imgName );
+            $formData['image']    = $imgName;
+        }
+
+        $profile->update($formData);
+
+        return response()->json("$this->title Updated Successfully");
     }
 
     /**
