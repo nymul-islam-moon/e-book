@@ -183,7 +183,7 @@ class BooksController extends Controller
         $formData['user_id'] = auth()->user()->id;
         $formData['file']   = $fileName;
         $formData['img']    = $imgName;
-
+        $formData['books_count'] = $formData['books_count'] + 1;
         $books->create( $formData );
 
         return response()->json("$this->title created successfully");
