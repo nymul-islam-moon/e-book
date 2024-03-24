@@ -18,7 +18,7 @@
 
                 <div class="col-lg-6">
                     <label for="books_category" class="form-label">{{ $title }} Category</label>
-                    <select class="form-control" name="books_category" id="category_status">
+                    <select class="form-control" name="books_category_id" id="category_status">
                         <option selected> -- Select {{ $title }} Category --</option>
                         @foreach ( $booksCategories as $booksCategory )
                             <option value="{{ $booksCategory->id }}" {{ $books->books_category == $booksCategory->id ? 'selected' : '' }} >{{ $booksCategory->name }}</option>

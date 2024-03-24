@@ -124,15 +124,25 @@ class BooksController extends Controller
 
                     return $html;
                 })
+                ->editColumn('books_category', function ($row) {
 
-                ->rawColumns(['action', 'status', 'checkbox', 'img'])
+                    $bookCategory = BookCategory::select('name')
+                    ->where('id', $row->books_category_id)
+                    ->first();
+
+                    return $bookCategory->name;
+
+                })
+
+
+                ->rawColumns(['action', 'status', 'checkbox', 'img', 'books_category'])
                 ->make(true);
         }
 
         $title = $this->title;
 
         $booksCategory = BookCategory::where( 'status', 1 )->get();
-        return view( 'admin.book.index', compact( 'title', 'booksCategory' ) );
+        return view('admin.book.index', compact( 'title', 'booksCategory' ));
     }
 
     /**
@@ -342,6 +352,14 @@ class BooksController extends Controller
 
     public function forceDelete($books)
     {
+
+        try {
+            unlink( 'uploads/books/file/' . $books->file );
+
+        } catch ( Exception $ex ) {
+
+        }
+
         Books::where('id', $books)->withTrashed()->forceDelete();
 
         return response()->json('Product Category Permanently Deleted Successfully');
@@ -404,6 +422,14 @@ class BooksController extends Controller
         $idArr = ( array ) $ids;
 
         foreach ($idArr as $key=> $id) {
+            $books_file = Books::where('id', $id)->first();
+
+            try {
+                unlink( 'uploads/books/file/' . $books_file->file );
+
+            } catch ( Exception $ex ) {
+
+            }
             $books = Books::where('id', $id)->withTrashed()->forceDelete();
         }
 

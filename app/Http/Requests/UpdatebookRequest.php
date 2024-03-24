@@ -25,7 +25,7 @@ class UpdateBookRequest extends FormRequest
     {
         return [
             'name'                  => 'required|string|min:3|max:100|unique:books,name,' . $this->books->id,
-            'books_category'        => 'required|integer',
+            'books_category_id'     => 'required|integer',
             'status'                => 'required|integer',
             'file'                  => 'file|mimes:pdf,doc,docx',
             'img'                   => 'image|mimes:jpeg,png,jpg,gif'
@@ -40,10 +40,11 @@ class UpdateBookRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required'         => 'Books name must be required',
-            'name.unique'           => 'Books name already exists',
-            'status.integer'        => 'Select a valid status',
-            'status.required'       => 'Books category must be required'
+            'name.required'                 => 'Books name must be required',
+            'books_category_id.required'    => 'Books category must be required',
+            'name.unique'                   => 'Books name already exists',
+            'status.integer'                => 'Select a valid status',
+            'status.required'               => 'Books category must be required'
         ];
     }
 }

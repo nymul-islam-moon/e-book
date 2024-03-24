@@ -16,15 +16,16 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('books_category_id')->nullable();
             $table->string('name');
             $table->boolean('status')->default(true);
-            $table->integer('books_category');
             $table->string('file');
             $table->string('img');
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('books_category_id')->references('id')->on('book_categories')->onDelete('CASCADE');
         });
     }
 

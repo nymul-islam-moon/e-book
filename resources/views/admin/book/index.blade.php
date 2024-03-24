@@ -92,6 +92,7 @@
                                                 <th scope="col">ID</th>
                                                 <th scope="col">Action</th>
                                                 <th scope="col">{{ $title }} Name</th>
+                                                <th scope="col">{{ $title }} Category Name</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">File</th>
                                                 <th scope="col">Cover Photo</th>
@@ -179,6 +180,7 @@
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'action', name: 'action'},
                 {data: 'name', name: 'name'},
+                {data: 'books_category', name: 'books_category'},
                 {data: 'status', name: 'status'},
                 {data: 'file', name: 'file'},
                 {data: 'img', name: 'img'},
