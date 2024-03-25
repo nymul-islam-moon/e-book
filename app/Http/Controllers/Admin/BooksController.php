@@ -9,6 +9,7 @@ use App\Models\Books;
 use App\Models\BookCategory;
 use App\Models\BuySubscription;
 use App\Models\Subscription;
+use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -183,7 +184,10 @@ class BooksController extends Controller
         $formData['user_id'] = auth()->user()->id;
         $formData['file']   = $fileName;
         $formData['img']    = $imgName;
-        $formData['books_count'] = $formData['books_count'] + 1;
+
+        $user = User::where('id', '=', $formData['user_id'])->first();
+        $user->books_count = 1;
+        $user->update();
         $books->create( $formData );
 
         return response()->json("$this->title created successfully");
