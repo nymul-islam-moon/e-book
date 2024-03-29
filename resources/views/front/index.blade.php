@@ -72,7 +72,7 @@
 
                     <form method="GET">
                         <div class="input-group mb-3">
-                          <input
+                            <input
                             type="text"
                             name="search"
                             value="{{ request()->get('search') }}"
@@ -80,7 +80,14 @@
                             placeholder="Search..."
                             aria-label="Search"
                             aria-describedby="button-addon2">
-                          <button class="btn btn-success" type="submit" id="button-addon2">Search</button>
+                            <select class="form-control" id="" name="category">
+                                <option value="" selected>Select Categories</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" >{{ $category->name }}</option>
+                                @endforeach
+
+                            </select>
+                            <button class="btn btn-success" type="submit" id="button-addon2">Search</button>
                         </div>
                     </form>
 
