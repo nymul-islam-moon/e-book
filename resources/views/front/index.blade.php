@@ -13,7 +13,8 @@
 
         {{-- My custome link --}}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+         {{-- Author : Nymul Islam Moon <towkir1997islam@gmail.com> Toaster CSS --}}
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
         <style>
             a {
                 text-decoration: none;
@@ -49,7 +50,7 @@
 								@if ( auth()->check() )
                                     <a href="{{ route('admin.profile.index') }}" class="text-muted medium"><i class="lni lni-user mr-1"></i><h5>{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</h5></a>
                                 @else
-                                    <a href="{{ route('front.registration.index') }}" class="text-muted medium"><i class="lni lni-user mr-1"></i>Sign Up</a>
+                                    <a href="{{ route('front.registration.index') }}" class="text-muted medium"><i class="lni lni-user mr-1"></i>Sign Up</a> | <a href="{{ route('admin.login') }}" class="text-muted medium"><i class="lni lni-user mr-1"></i>Sign In</a>
                                 @endif
 							</div>
 						</div>
@@ -130,8 +131,38 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+         {{--
+            Author: Nymul Islam Moon <towkir1997islam@gmail.com>
+            Toaster CDN
+        --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 		<script>
+            $(document).ready(function(){
 
+                /**
+                 * Author Name : Nymul Islam Moon <towkir1997islam@gmail.com>
+                 * Show Messages
+                 *
+                 * */
+
+                @if (Session::has('message'))
+                    var type="{{ Session::get('alert-type', 'info') }}"
+                    switch(type) {
+                        case 'info':
+                            toastr.info('{{ Session::get('message') }}');
+                            break;
+                        case 'success':
+                            toastr.success('{{ Session::get('message') }}');
+                            break;
+                        case 'warning':
+                            toastr.warning('{{ Session::get('message') }}');
+                            break;
+                        case 'error':
+                            toastr.error('{{ Session::get('message') }}');
+                            break;
+                    }
+                @endif
+            });
 		</script>
 	</body>
 

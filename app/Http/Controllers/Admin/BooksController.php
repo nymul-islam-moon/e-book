@@ -186,7 +186,7 @@ class BooksController extends Controller
         $formData['img']    = $imgName;
 
         $user = User::where('id', '=', $formData['user_id'])->first();
-        $user->books_count = 1;
+        $user->books_count = $user->books_count + 1;
         $user->update();
         $books->create( $formData );
 
@@ -201,6 +201,9 @@ class BooksController extends Controller
      */
     public function show( Books $book )
     {
+
+
+
         if (auth()->user()->is_admin == 3) {
             $subscription = BuySubscription::where('user_id', '=', auth()->user()->id)->where('status', '=', 1)->first();
 
@@ -211,13 +214,17 @@ class BooksController extends Controller
                 if ( $subscription->exp_date >= $currentDate  ) {
                     return view('front.read', compact('book'));
                 } else {
-                    return redirect()->route('admin.buySubscription.index');
+                    $notification = array('message' => 'You have to buy subscription or Upload 25 books!', 'alert-type' => 'error');
+
+                    return redirect()->route('home')->with($notification);
                 }
 
             } else if( auth()->user()->books_count >= 25 ) {
                 return view('front.read', compact('book'));
             } else {
-                return redirect()->route('admin.buySubscription.index');
+                $notification = array('message' => 'You have to buy subscription or Upload 25 books!', 'alert-type' => 'error');
+
+                return redirect()->route('home')->with($notification);
             }
 
         } else {
@@ -364,6 +371,12 @@ class BooksController extends Controller
 
         }
 
+        $user = User::where('id', '=', auth()->user()->id)->first();
+        if( $user->books_count > 0 ) {
+            $user->books_count = $user->books_count - 1;
+            $user->update();
+        }
+
         Books::where('id', $books)->withTrashed()->forceDelete();
 
         return response()->json('Product Category Permanently Deleted Successfully');
@@ -424,7 +437,7 @@ class BooksController extends Controller
         $ids = $request->ids;
 
         $idArr = ( array ) $ids;
-
+        $user = User::where('id', '=', auth()->user()->id)->first();
         foreach ($idArr as $key=> $id) {
             $books_file = Books::where('id', $id)->first();
 
@@ -434,6 +447,12 @@ class BooksController extends Controller
             } catch ( Exception $ex ) {
 
             }
+
+            if( $user->books_count > 0 ) {
+                $user->books_count = $user->books_count - 1;
+                $user->update();
+            }
+
             $books = Books::where('id', $id)->withTrashed()->forceDelete();
         }
 
