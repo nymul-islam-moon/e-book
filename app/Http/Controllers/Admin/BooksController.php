@@ -371,7 +371,7 @@ class BooksController extends Controller
 
         }
 
-        $user = User::where('id', '=', auth()->user()->id)->first();
+        $user = User::where('id', '=', $books->user_id)->first();
         if( $user->books_count > 0 ) {
             $user->books_count = $user->books_count - 1;
             $user->update();
@@ -437,7 +437,7 @@ class BooksController extends Controller
         $ids = $request->ids;
 
         $idArr = ( array ) $ids;
-        $user = User::where('id', '=', auth()->user()->id)->first();
+        $user = User::where('id', '=', $books->user_id)->first();
         foreach ($idArr as $key=> $id) {
             $books_file = Books::where('id', $id)->first();
 
